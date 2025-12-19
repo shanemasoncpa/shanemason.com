@@ -3,8 +3,8 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://yourusername.github.io',
-  base: '/',
+  site: 'https://shanemasoncpa.github.io',
+  base: '/shanemason.com/',
   integrations: [tailwind()],
   output: 'static',
 });
