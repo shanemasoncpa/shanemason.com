@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Get unique tags
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+---
+
+<BaseLayout title="Blog | Shane" description="Thoughts on finance, technology, entrepreneurship, and life.">
+  <!-- Hero -->
+  <section class="section-padding bg-gradient-to-b from-primary-100 to-white">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Blog" 
+        subtitle="Thoughts, insights, and lessons learned from building businesses, advising clients, and navigating the entrepreneurial journey."
+      />
+    </div>
+  </section>
+  
+  <!-- Tag Filter -->
+  {allTags.length > 0 && (
+    <section class="py-8 border-b border-primary-200">
+      <div class="container-wide">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="text-sm text-primary-500 font-medium">Filter by:</span>
+          <button 
+            class="tag-filter px-3 py-1 text-sm rounded-full bg-primary-900 text-white"
+            data-tag="all"
+          >
+            All
+          </button>
+          {allTags.map(tag => (
+            <button 
+              class="tag-filter px-3 py-1 text-sm rounded-full bg-primary-100 text-primary-700 hover:bg-primary-200 transition-colors"
+              data-tag={tag}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+  
+  <!-- Posts Grid -->
+  <section class="section-padding">
+    <div class="container-wide">
+      {posts.length > 0 ? (
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">
+          {posts.map((post, index) => (
+            <article 
+              class={`animate-on-scroll stagger-${(index % 6) + 1}`}
+              data-tags={post.data.tags.join(',')}
+            >
+              <Card
+                href={`/blog/${post.slug}`}
+                title={post.data.title}
+                description={post.data.description}
+                image={post.data.heroImage}
+                meta={post.data.pubDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+                tags={post.data.tags}
+              />
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <p class="text-xl text-primary-500 mb-4">No posts yet</p>
+          <p class="text-primary-400">Check back soon for new content!</p>
+        </div>
+      )}
+    </div>
+  </section>
+  
+  <!-- Newsletter CTA -->
+  <section class="section-padding bg-primary-900 text-primary-50">
+    <div class="container-narrow text-center">
+      <h2 class="mb-4">Stay Updated</h2>
+      <p class="text-primary-300 mb-8 text-lg">
+        Get notified when I publish new posts. No spam, just insights.
+      </p>
+      <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+        <input 
+          type="email" 
+          placeholder="your@email.com"
+          class="flex-1 px-4 py-3 rounded-sm bg-primary-800 border border-primary-700 text-white placeholder-primary-400 focus:outline-none focus:border-accent-500"
+        />
+        <button type="submit" class="btn-accent whitespace-nowrap">
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const filters = document.querySelectorAll('.tag-filter');
+  const articles = document.querySelectorAll('#posts-grid article');
+  
+  filters.forEach(filter => {
+    filter.addEventListener('click', () => {
+      const tag = filter.getAttribute('data-tag');
+      
+      // Update active state
+      filters.forEach(f => {
+        f.classList.remove('bg-primary-900', 'text-white');
+        f.classList.add('bg-primary-100', 'text-primary-700');
+      });
+      filter.classList.remove('bg-primary-100', 'text-primary-700');
+      filter.classList.add('bg-primary-900', 'text-white');
+      
+      // Filter articles
+      articles.forEach(article => {
+        const articleTags = article.getAttribute('data-tags')?.split(',') || [];
+        if (tag === 'all' || articleTags.includes(tag)) {
+          article.style.display = 'block';
+        } else {
+          article.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+

@@ -1,0 +1,249 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import { getCollection } from 'astro:content';
+
+// Try to get speaking events, handle gracefully if empty
+let events: any[] = [];
+try {
+  events = await getCollection('speaking');
+} catch (e) {
+  events = [];
+}
+
+const upcomingEvents = events.filter(e => e.data.upcoming);
+const pastEvents = events.filter(e => !e.data.upcoming);
+
+const topics = [
+  {
+    title: 'Building & Exiting a Business',
+    description: 'The entrepreneurial journey from founding to exit, with practical insights on valuation, negotiation, and life after sale.',
+    icon: '🚀',
+  },
+  {
+    title: 'Financial Planning for Founders',
+    description: 'How entrepreneurs can protect their wealth while building their companies, including equity compensation and liquidity events.',
+    icon: '📊',
+  },
+  {
+    title: 'The Future of Fintech',
+    description: 'Trends shaping financial technology, from AI-powered advice to the democratization of financial services.',
+    icon: '⚡',
+  },
+  {
+    title: 'Leadership & Team Building',
+    description: 'Lessons learned from scaling a company, building culture, and developing leaders within your organization.',
+    icon: '👥',
+  },
+];
+
+const testimonials = [
+  {
+    quote: "Shane's talk was the highlight of our conference. His ability to make complex financial concepts accessible while keeping the audience engaged is remarkable.",
+    author: "Conference Organizer",
+    event: "Fintech Summit 2023",
+  },
+  {
+    quote: "Practical, insightful, and genuinely entertaining. Our members are still talking about his presentation months later.",
+    author: "Event Director",
+    event: "Entrepreneur Network Annual Meeting",
+  },
+];
+
+const featuredVideos = [
+  {
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    title: "Keynote: The Entrepreneur's Exit Playbook",
+    description: "Annual Founders Conference 2023",
+  },
+  {
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    title: "Panel: The Future of Financial Advice",
+    description: "Fintech Forward Summit",
+  },
+];
+---
+
+<BaseLayout title="Speaking | Shane" description="Keynotes, panels, and presentations on building businesses, financial strategy, and entrepreneurship.">
+  <!-- Hero -->
+  <section class="section-padding bg-gradient-to-b from-accent-50 to-white">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-fade-in-up">
+          <p class="text-accent-600 font-medium mb-4">Speaking</p>
+          <h1 class="mb-6">
+            Sharing insights<br />
+            <span class="text-gradient">from the trenches</span>
+          </h1>
+          <p class="text-xl text-primary-600 leading-relaxed mb-8">
+            I speak at conferences, corporate events, and podcasts about entrepreneurship, 
+            financial strategy, and the lessons learned from building businesses. My goal is 
+            always the same: deliver practical value with energy and authenticity.
+          </p>
+          <a href="mailto:speaking@example.com" class="btn-primary">
+            Book Me to Speak
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+        
+        <div class="relative animate-fade-in stagger-2">
+          <!-- Placeholder for speaking photo -->
+          <div class="aspect-video bg-gradient-to-br from-primary-200 to-primary-300 rounded-sm flex items-center justify-center">
+            <p class="text-primary-500 text-center p-8">
+              [Speaking Photo]<br />
+              <span class="text-sm">Add to /public/images/speaking-hero.jpg</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Topics -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Speaking Topics" 
+        subtitle="I tailor each presentation to your audience, but these are the areas where I bring the most expertise and energy."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        {topics.map((topic, index) => (
+          <div class={`card animate-on-scroll stagger-${index + 1}`}>
+            <span class="text-3xl mb-4 block">{topic.icon}</span>
+            <h3 class="text-xl font-semibold mb-2">{topic.title}</h3>
+            <p class="text-primary-600">{topic.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Featured Videos -->
+  <section class="section-padding bg-primary-100">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Watch Me Speak" 
+        subtitle="Sample recordings from recent events. Upload your speaking videos to YouTube and they'll appear here."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        {featuredVideos.map((video, index) => (
+          <div class={`animate-on-scroll stagger-${index + 1}`}>
+            <VideoEmbed 
+              url={video.url}
+              title={video.title}
+              description={video.description}
+            />
+          </div>
+        ))}
+      </div>
+      
+      <p class="text-center text-primary-500 mt-8 text-sm">
+        Replace placeholder URLs in the page source with your actual YouTube video links
+      </p>
+    </div>
+  </section>
+  
+  <!-- Testimonials -->
+  <section class="section-padding">
+    <div class="container-narrow">
+      <SectionHeader 
+        title="What Organizers Say" 
+        align="center"
+      />
+      
+      <div class="space-y-8">
+        {testimonials.map((testimonial, index) => (
+          <blockquote class={`card-elevated animate-on-scroll stagger-${index + 1}`}>
+            <p class="text-xl text-primary-700 italic mb-4">"{testimonial.quote}"</p>
+            <footer class="text-primary-500">
+              <span class="font-medium text-primary-900">{testimonial.author}</span>
+              <span class="mx-2">—</span>
+              <span>{testimonial.event}</span>
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Upcoming Events -->
+  {upcomingEvents.length > 0 && (
+    <section class="section-padding bg-accent-50">
+      <div class="container-wide">
+        <SectionHeader 
+          title="Upcoming Events" 
+          subtitle="Catch me at one of these upcoming speaking engagements."
+        />
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {upcomingEvents.map((event, index) => (
+            <div class={`card border-accent-300 animate-on-scroll stagger-${index + 1}`}>
+              <p class="text-sm text-accent-600 font-medium mb-2">
+                {event.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              </p>
+              <h3 class="text-xl font-semibold mb-1">{event.data.title}</h3>
+              <p class="text-primary-600 mb-2">{event.data.event}</p>
+              <p class="text-sm text-primary-500">{event.data.location}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+  
+  <!-- Past Events -->
+  {pastEvents.length > 0 && (
+    <section class="section-padding">
+      <div class="container-wide">
+        <SectionHeader 
+          title="Past Events" 
+          subtitle="A selection of previous speaking engagements."
+        />
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {pastEvents.map((event, index) => (
+            <div class={`card animate-on-scroll stagger-${(index % 6) + 1}`}>
+              <p class="text-sm text-primary-500 mb-2">
+                {event.data.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              </p>
+              <h3 class="text-lg font-semibold mb-1">{event.data.title}</h3>
+              <p class="text-primary-600 text-sm">{event.data.event}</p>
+              {event.data.videoUrl && (
+                <a href={event.data.videoUrl} target="_blank" rel="noopener" class="text-accent-600 text-sm hover:underline mt-2 inline-block">
+                  Watch Recording →
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+  
+  <!-- CTA -->
+  <section class="section-padding bg-primary-900 text-primary-50">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6">Interested in Having Me Speak?</h2>
+      <p class="text-primary-300 text-lg mb-8">
+        I'm always open to discussing speaking opportunities. Whether it's a keynote, 
+        panel discussion, or workshop, let's talk about how I can add value to your event.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="mailto:speaking@example.com" class="btn-accent">
+          Get in Touch
+        </a>
+        <a href="/media" class="btn-secondary border-primary-700 text-primary-50 hover:bg-primary-800">
+          See Media Appearances
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

@@ -1,0 +1,47 @@
+/* Brooklyn Fi Brand Overrides */
+.brooklyn-fi-theme {
+  --brand-primary: #1e3a5f;
+  --brand-secondary: #2c5282;
+  --brand-accent: #4299e1;
+  --brand-light: #ebf8ff;
+}
+
+.brooklyn-fi-theme h1,
+.brooklyn-fi-theme h2,
+.brooklyn-fi-theme h3 {
+  @apply text-brooklynfi-primary;
+}
+
+.brooklyn-fi-theme .btn-primary {
+  @apply bg-brooklynfi-primary hover:bg-brooklynfi-secondary;
+}
+
+.brooklyn-fi-theme .btn-accent {
+  @apply bg-brooklynfi-accent hover:bg-brooklynfi-secondary;
+}
+
+.brooklyn-fi-theme .text-gradient {
+  @apply bg-gradient-to-r from-brooklynfi-primary to-brooklynfi-accent bg-clip-text text-transparent;
+}
+
+.brooklyn-fi-theme .card {
+  @apply border-brooklynfi-accent/20 hover:border-brooklynfi-accent/40;
+}
+
+.brooklyn-fi-theme ::selection {
+  @apply bg-brooklynfi-accent/30 text-brooklynfi-primary;
+}
+
+/* Timeline specific styles for Brooklyn Fi */
+.brooklyn-fi-theme .timeline-line {
+  @apply bg-brooklynfi-accent;
+}
+
+.brooklyn-fi-theme .timeline-dot {
+  @apply bg-brooklynfi-primary border-brooklynfi-accent;
+}
+
+.brooklyn-fi-theme .timeline-dot.active {
+  @apply bg-brooklynfi-accent;
+}
+

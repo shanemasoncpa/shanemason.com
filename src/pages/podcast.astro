@@ -1,0 +1,227 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+
+const podcastLinks = [
+  { platform: 'YouTube', url: 'https://www.youtube.com/playlist?list=PLdexBS_EY0yyfO36PsIH1j9sKacKCcgwi', icon: 'youtube' },
+  { platform: 'Apple Podcasts', url: '#', icon: 'apple' },
+  { platform: 'Spotify', url: '#', icon: 'spotify' },
+];
+
+const featuredEpisodes = [
+  {
+    title: "What No One Tells You About Selling Your Business",
+    description: "We dive deep into the emotional and financial realities of exiting a company.",
+    url: "https://www.youtube.com/watch?v=example1",
+    episodeNumber: 100,
+  },
+  {
+    title: "Tax Strategies Every Founder Should Know",
+    description: "Breaking down the tax implications of equity compensation, exits, and wealth building.",
+    url: "https://www.youtube.com/watch?v=example2",
+    episodeNumber: 95,
+  },
+  {
+    title: "From Employee to Entrepreneur",
+    description: "Stories and advice for those making the leap from corporate to founder.",
+    url: "https://www.youtube.com/watch?v=example3",
+    episodeNumber: 90,
+  },
+];
+
+const hosts = [
+  {
+    name: "Shane",
+    role: "Co-Host",
+    bio: "Founder of Brooklyn Fi and creator of Gemifi. Passionate about helping entrepreneurs navigate their financial journeys.",
+  },
+  {
+    name: "Business Partner",
+    role: "Co-Host",
+    bio: "Your business partner's bio goes here. Update this in the page source.",
+  },
+];
+---
+
+<BaseLayout title="The Liquidity Event | Shane" description="A podcast exploring the journeys of entrepreneurs through exits, wealth, and what comes after.">
+  <!-- Hero -->
+  <section class="section-padding bg-gradient-to-br from-primary-900 via-primary-800 to-accent-900 text-primary-50 relative overflow-hidden">
+    <!-- Background pattern -->
+    <div class="absolute inset-0 opacity-5">
+      <svg width="100%" height="100%">
+        <pattern id="podcast-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="20" cy="20" r="1.5" fill="currentColor"/>
+        </pattern>
+        <rect width="100%" height="100%" fill="url(#podcast-pattern)"/>
+      </svg>
+    </div>
+    
+    <div class="container-wide relative z-10">
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="inline-block px-4 py-1 bg-accent-500/20 text-accent-300 rounded-full text-sm font-medium mb-6 animate-fade-in">
+          A Brooklyn Fi Podcast
+        </div>
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif mb-6 animate-fade-in-up">
+          The Liquidity<br />Event
+        </h1>
+        <p class="text-xl md:text-2xl text-primary-200 mb-8 animate-fade-in-up stagger-1">
+          Conversations about entrepreneurship, exits, and everything in between. 
+          Real stories from founders who've been through it all.
+        </p>
+        
+        <!-- Subscribe buttons -->
+        <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up stagger-2">
+          {podcastLinks.map(link => (
+            <a 
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-3 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
+            >
+              {link.icon === 'youtube' && (
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                  <path fill="#1a1a2e" d="M9.545 15.568V8.432L15.818 12z"/>
+                </svg>
+              )}
+              {link.icon === 'apple' && (
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/>
+                </svg>
+              )}
+              {link.icon === 'spotify' && (
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                </svg>
+              )}
+              <span class="font-medium">{link.platform}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Full Playlist Embed -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Latest Episodes" 
+        subtitle="Watch full episodes directly from our YouTube channel."
+        align="center"
+      />
+      
+      <div class="max-w-4xl mx-auto">
+        <VideoEmbed 
+          url="https://www.youtube.com/playlist?list=PLdexBS_EY0yyfO36PsIH1j9sKacKCcgwi"
+          title="The Liquidity Event Full Playlist"
+        />
+      </div>
+    </div>
+  </section>
+  
+  <!-- Featured Episodes -->
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Popular Episodes" 
+        subtitle="Start here if you're new to the show."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        {featuredEpisodes.map((episode, index) => (
+          <a 
+            href={episode.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`card group animate-on-scroll stagger-${index + 1}`}
+          >
+            <div class="aspect-video bg-gradient-to-br from-primary-900 to-accent-900 rounded-sm mb-4 flex items-center justify-center relative overflow-hidden">
+              <span class="absolute top-2 left-2 px-2 py-1 bg-white/20 text-white text-xs rounded">
+                EP {episode.episodeNumber}
+              </span>
+              <svg class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-lg group-hover:text-accent-600 transition-colors mb-2">
+              {episode.title}
+            </h3>
+            <p class="text-primary-600 text-sm">{episode.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- About the Show -->
+  <section class="section-padding">
+    <div class="container-narrow">
+      <SectionHeader 
+        title="About the Show" 
+        align="center"
+      />
+      
+      <div class="prose prose-lg max-w-none text-center mb-12">
+        <p class="text-xl text-primary-600 leading-relaxed">
+          The Liquidity Event is a podcast from Brooklyn Fi that explores the 
+          entrepreneurial journey through the lens of financial planning and wealth building. 
+          Each week, we dive into real stories from founders who've built, scaled, and 
+          exited companies — sharing the lessons that don't make it into the headlines.
+        </p>
+      </div>
+      
+      <!-- Hosts -->
+      <div class="grid md:grid-cols-2 gap-8">
+        {hosts.map((host, index) => (
+          <div class={`card text-center animate-on-scroll stagger-${index + 1}`}>
+            <div class="w-24 h-24 bg-gradient-to-br from-primary-200 to-primary-300 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <span class="text-primary-500 text-2xl font-serif font-bold">
+                {host.name.charAt(0)}
+              </span>
+            </div>
+            <h3 class="text-xl font-semibold">{host.name}</h3>
+            <p class="text-accent-600 text-sm font-medium mb-3">{host.role}</p>
+            <p class="text-primary-600 text-sm">{host.bio}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Topics Covered -->
+  <section class="section-padding bg-primary-900 text-primary-50">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Topics We Cover" 
+        subtitle="From the practical to the philosophical, here's what you'll find on the show."
+        align="center"
+      />
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        {['Business Exits', 'Wealth Building', 'Tax Strategy', 'Founder Stories', 'M&A Insights', 'Life After Exit', 'Equity Planning', 'Market Trends'].map((topic, index) => (
+          <div class={`py-4 px-6 bg-white/5 rounded-sm animate-on-scroll stagger-${(index % 4) + 1}`}>
+            <span class="text-primary-200">{topic}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="section-padding">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6">Want to Be a Guest?</h2>
+      <p class="text-xl text-primary-600 mb-8">
+        We're always looking for founders with interesting stories to share. 
+        If you've had a liquidity event (or are preparing for one), we'd love to hear from you.
+      </p>
+      <a href="mailto:podcast@example.com" class="btn-primary">
+        Pitch Your Story
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+

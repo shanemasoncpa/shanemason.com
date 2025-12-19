@@ -1,0 +1,87 @@
+---
+interface Props {
+  url: string;
+  title?: string;
+  description?: string;
+  aspectRatio?: '16:9' | '4:3' | '1:1';
+}
+
+const { url, title, description, aspectRatio = '16:9' } = Astro.props;
+
+// Extract video ID and platform
+const getVideoData = (url: string) => {
+  // YouTube patterns
+  const youtubePatterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/playlist\?list=([a-zA-Z0-9_-]+)/,
+  ];
+  
+  // Vimeo pattern
+  const vimeoPattern = /vimeo\.com\/(?:video\/)?(\d+)/;
+  
+  for (const pattern of youtubePatterns) {
+    const match = url.match(pattern);
+    if (match) {
+      const isPlaylist = url.includes('playlist');
+      return {
+        platform: 'youtube',
+        id: match[1],
+        embedUrl: isPlaylist 
+          ? `https://www.youtube.com/embed/videoseries?list=${match[1]}`
+          : `https://www.youtube.com/embed/${match[1]}`,
+      };
+    }
+  }
+  
+  const vimeoMatch = url.match(vimeoPattern);
+  if (vimeoMatch) {
+    return {
+      platform: 'vimeo',
+      id: vimeoMatch[1],
+      embedUrl: `https://player.vimeo.com/video/${vimeoMatch[1]}`,
+    };
+  }
+  
+  return null;
+};
+
+const videoData = getVideoData(url);
+
+const aspectClasses = {
+  '16:9': 'aspect-video',
+  '4:3': 'aspect-[4/3]',
+  '1:1': 'aspect-square',
+};
+---
+
+{videoData ? (
+  <div class="video-embed">
+    {title && (
+      <h3 class="text-xl font-semibold mb-2">{title}</h3>
+    )}
+    {description && (
+      <p class="text-primary-600 mb-4">{description}</p>
+    )}
+    <div class={`relative ${aspectClasses[aspectRatio]} bg-primary-100 rounded-sm overflow-hidden`}>
+      <iframe
+        src={videoData.embedUrl}
+        title={title || 'Video'}
+        class="absolute inset-0 w-full h-full"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+) : (
+  <div class="p-8 bg-primary-100 rounded-sm text-center">
+    <p class="text-primary-500">Unable to embed video. <a href={url} target="_blank" rel="noopener" class="text-accent-600 hover:underline">Watch on original platform →</a></p>
+  </div>
+)}
+
+<style>
+  .video-embed iframe {
+    border: none;
+  }
+</style>
+

@@ -1,0 +1,285 @@
+---
+import GemifiLayout from '../layouts/GemifiLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { getCollection } from 'astro:content';
+
+// Try to get Gemifi updates, handle gracefully if empty
+let updates: any[] = [];
+try {
+  updates = await getCollection('gemifi');
+} catch (e) {
+  updates = [];
+}
+
+const sortedUpdates = updates.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const productHistory = [
+  {
+    year: '2024',
+    title: 'Platform Maturity',
+    description: 'Refined user experience based on extensive client feedback. Expanded integrations and reporting capabilities.',
+    type: 'milestone',
+  },
+  {
+    year: '2023',
+    title: 'Public Launch',
+    description: 'Opened Gemifi to the broader market after successful beta with Brooklyn Fi clients.',
+    type: 'milestone',
+  },
+  {
+    year: '2022',
+    title: 'Beta Release',
+    description: 'Launched beta version to Brooklyn Fi clients, gathering feedback and iterating rapidly.',
+    type: 'release',
+  },
+  {
+    year: '2021',
+    title: 'Development Begins',
+    description: 'Started building Gemifi to solve the financial planning software gaps we experienced firsthand.',
+    type: 'milestone',
+  },
+];
+
+const features = [
+  {
+    title: 'Comprehensive Planning',
+    description: 'All-in-one platform for financial planning, investment management, and client collaboration.',
+    icon: '📊',
+  },
+  {
+    title: 'Equity Compensation',
+    description: 'Specialized tools for analyzing and planning around stock options, RSUs, and other equity.',
+    icon: '📈',
+  },
+  {
+    title: 'Client Portal',
+    description: 'Beautiful, intuitive interface for clients to view their complete financial picture.',
+    icon: '✨',
+  },
+  {
+    title: 'Real-Time Sync',
+    description: 'Automatic data aggregation from accounts, keeping everything up to date.',
+    icon: '🔄',
+  },
+];
+
+const placeholderUpdates = [
+  {
+    title: 'Version 2.5 Released',
+    version: 'v2.5',
+    date: new Date('2024-03-01'),
+    description: 'Major update with improved reporting, new integrations, and performance enhancements.',
+    type: 'release',
+  },
+  {
+    title: 'Tax Planning Module',
+    version: 'v2.4',
+    date: new Date('2024-01-15'),
+    description: 'Introduced comprehensive tax planning features including tax-loss harvesting recommendations.',
+    type: 'release',
+  },
+  {
+    title: '1000+ Active Users',
+    date: new Date('2023-11-01'),
+    description: 'Reached a significant milestone with over 1000 active users on the platform.',
+    type: 'milestone',
+  },
+];
+
+const displayUpdates = sortedUpdates.length > 0 
+  ? sortedUpdates.map(u => u.data) 
+  : placeholderUpdates;
+---
+
+<GemifiLayout title="Gemifi | Shane">
+  <!-- Hero -->
+  <section class="section-padding relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gemifi-accent/10 to-transparent"></div>
+    
+    <div class="container-wide relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-fade-in-up">
+          <div class="flex items-center gap-3 mb-6">
+            <!-- Gemifi logo placeholder -->
+            <div class="w-12 h-12 bg-gradient-to-br from-gemifi-primary to-gemifi-secondary rounded-sm flex items-center justify-center text-white font-bold">
+              G
+            </div>
+            <span class="text-sm text-gemifi-primary font-medium">Gemifi</span>
+          </div>
+          
+          <h1 class="mb-6">
+            Building the Future of<br />
+            <span class="text-gradient">Financial Planning</span>
+          </h1>
+          
+          <p class="text-xl text-primary-600 leading-relaxed mb-6">
+            Gemifi is the financial planning platform I wish existed when we started Brooklyn Fi. 
+            Built from real-world experience serving entrepreneurs and professionals.
+          </p>
+          
+          <p class="text-lg text-primary-500 leading-relaxed mb-8">
+            This page documents the journey of creating Gemifi — the wins, the challenges, 
+            and the ongoing evolution of the product.
+          </p>
+          
+          <a 
+            href="https://gemifi.co" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="btn-primary"
+          >
+            Visit Gemifi
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+        
+        <div class="relative animate-fade-in stagger-2">
+          <!-- Product screenshot placeholder -->
+          <div class="aspect-[4/3] bg-gradient-to-br from-gemifi-light to-gemifi-accent/20 rounded-sm flex items-center justify-center border border-gemifi-accent/30 shadow-xl">
+            <p class="text-gemifi-primary text-center p-8">
+              [Gemifi Screenshot]<br />
+              <span class="text-sm">Product dashboard image</span>
+            </p>
+          </div>
+          <!-- Decorative elements -->
+          <div class="absolute -bottom-4 -left-4 w-24 h-24 bg-gemifi-accent/20 rounded-full blur-2xl"></div>
+          <div class="absolute -top-4 -right-4 w-32 h-32 bg-gemifi-primary/10 rounded-full blur-3xl"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Features -->
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <SectionHeader 
+        title="What Gemifi Does" 
+        subtitle="A platform designed by advisors, for advisors — and their clients."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {features.map((feature, index) => (
+          <div class={`card text-center animate-on-scroll stagger-${index + 1}`}>
+            <span class="text-4xl mb-4 block">{feature.icon}</span>
+            <h3 class="text-lg font-semibold mb-2 text-gemifi-primary">{feature.title}</h3>
+            <p class="text-primary-600 text-sm">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Product History Timeline -->
+  <section class="section-padding bg-gemifi-light">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Product History" 
+        subtitle="The journey from idea to reality."
+        align="center"
+      />
+      
+      <div class="max-w-3xl mx-auto">
+        <div class="space-y-8">
+          {productHistory.map((item, index) => (
+            <div class={`flex gap-6 animate-on-scroll stagger-${index + 1}`}>
+              <div class="flex flex-col items-center">
+                <div class="w-4 h-4 rounded-full bg-gemifi-primary border-4 border-gemifi-accent"></div>
+                {index < productHistory.length - 1 && (
+                  <div class="w-px flex-1 bg-gemifi-accent/50 mt-2"></div>
+                )}
+              </div>
+              <div class="pb-8">
+                <span class="text-sm font-mono text-gemifi-primary">{item.year}</span>
+                <h3 class="text-xl font-semibold mt-1">{item.title}</h3>
+                <p class="text-primary-600 mt-2">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Development Updates -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Development Updates" 
+        subtitle="The latest from Gemifi's evolution. Add updates via the content collection to keep this current."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {displayUpdates.slice(0, 6).map((update, index) => (
+          <div class={`update-card card border-gemifi-accent/20 animate-on-scroll stagger-${(index % 3) + 1}`}>
+            <div class="flex items-center gap-3 mb-3">
+              {update.version && (
+                <span class="version-badge">{update.version}</span>
+              )}
+              <span class="text-sm text-primary-500">
+                {update.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+              </span>
+            </div>
+            <h3 class="text-lg font-semibold mb-2 text-gemifi-primary">{update.title}</h3>
+            <p class="text-primary-600 text-sm">{update.description}</p>
+            <div class="mt-3">
+              <span class={`inline-block px-2 py-1 text-xs rounded-full ${
+                update.type === 'release' ? 'bg-green-100 text-green-700' :
+                update.type === 'milestone' ? 'bg-gemifi-accent/20 text-gemifi-primary' :
+                'bg-primary-100 text-primary-700'
+              }`}>
+                {update.type}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <p class="text-center text-primary-500 mt-8 text-sm">
+        Add markdown files to /src/content/gemifi/ to post new updates
+      </p>
+    </div>
+  </section>
+  
+  <!-- Why I Built This -->
+  <section class="section-padding bg-gemifi-primary text-white">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6 text-white">Why I Built Gemifi</h2>
+      <blockquote class="text-xl text-gemifi-light/90 italic leading-relaxed mb-8">
+        "After years of using clunky, outdated software at Brooklyn Fi, I knew there had to be 
+        a better way. Gemifi is the tool we always wanted — built with the same care and 
+        attention to detail we bring to our client relationships."
+      </blockquote>
+      <p class="text-gemifi-accent font-medium">— Shane</p>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="section-padding">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6">Interested in Gemifi?</h2>
+      <p class="text-xl text-primary-600 mb-8">
+        Whether you're an advisor looking for better tools or just curious about the product, 
+        I'd love to show you what we've built.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a 
+          href="https://gemifi.co" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="btn-primary"
+        >
+          Try Gemifi
+        </a>
+        <a href="/brooklyn-fi" class="btn-secondary">
+          See Brooklyn Fi Story
+        </a>
+      </div>
+    </div>
+  </section>
+</GemifiLayout>
+

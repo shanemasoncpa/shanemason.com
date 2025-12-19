@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PhotoGallery from '../components/PhotoGallery.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { getCollection } from 'astro:content';
+
+// Try to get gallery photos, handle gracefully if empty
+let galleryItems: any[] = [];
+try {
+  galleryItems = await getCollection('gallery');
+} catch (e) {
+  galleryItems = [];
+}
+
+const sortedGallery = galleryItems.sort((a, b) => a.data.order - b.data.order);
+
+// Group by category
+const groupedPhotos = {
+  dog: sortedGallery.filter(p => p.data.category === 'dog').map(p => p.data),
+  mexico: sortedGallery.filter(p => p.data.category === 'mexico').map(p => p.data),
+  sailing: sortedGallery.filter(p => p.data.category === 'sailing').map(p => p.data),
+  travel: sortedGallery.filter(p => p.data.category === 'travel').map(p => p.data),
+};
+
+// Placeholder photos for demonstration
+const placeholderPhotos = {
+  dog: [
+    { src: '/images/personal/dog-1.jpg', alt: 'My dog', caption: 'Best companion for remote work', category: 'dog' },
+    { src: '/images/personal/dog-2.jpg', alt: 'Dog at the park', caption: 'Morning walks are the best', category: 'dog' },
+    { src: '/images/personal/dog-3.jpg', alt: 'Sleepy pup', caption: 'After a long day of meetings', category: 'dog' },
+  ],
+  mexico: [
+    { src: '/images/personal/mexico-1.jpg', alt: 'Mexico City street', caption: 'Roma Norte mornings', category: 'mexico' },
+    { src: '/images/personal/mexico-2.jpg', alt: 'Rooftop view', caption: 'CDMX skyline', category: 'mexico' },
+    { src: '/images/personal/mexico-3.jpg', alt: 'Local market', caption: 'Weekend market finds', category: 'mexico' },
+    { src: '/images/personal/mexico-4.jpg', alt: 'Architecture', caption: 'The details are everywhere', category: 'mexico' },
+  ],
+  sailing: [
+    { src: '/images/personal/sailing-1.jpg', alt: 'On the water', caption: 'Nothing like it', category: 'sailing' },
+    { src: '/images/personal/sailing-2.jpg', alt: 'Sunset sail', caption: 'Golden hour on the water', category: 'sailing' },
+    { src: '/images/personal/sailing-3.jpg', alt: 'Crew', caption: 'With the crew', category: 'sailing' },
+  ],
+};
+
+const dogPhotos = groupedPhotos.dog.length > 0 ? groupedPhotos.dog : placeholderPhotos.dog;
+const mexicoPhotos = groupedPhotos.mexico.length > 0 ? groupedPhotos.mexico : placeholderPhotos.mexico;
+const sailingPhotos = groupedPhotos.sailing.length > 0 ? groupedPhotos.sailing : placeholderPhotos.sailing;
+---
+
+<BaseLayout title="Life | Shane" description="Beyond work: adventures, home, and the little things that matter.">
+  <!-- Hero -->
+  <section class="section-padding bg-gradient-to-b from-accent-50 to-white">
+    <div class="container-wide">
+      <div class="max-w-3xl animate-fade-in-up">
+        <p class="text-accent-600 font-medium mb-4">Life Beyond Work</p>
+        <h1 class="mb-6">
+          The other<br />
+          <span class="text-gradient">chapters</span>
+        </h1>
+        <p class="text-xl text-primary-600 leading-relaxed">
+          Work is important, but it's not everything. Here's a glimpse into the rest of my life — 
+          the four-legged friend who keeps me company, the city I've come to love, and the water 
+          that keeps me grounded.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Dog Section -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-3 gap-12 items-start">
+        <div class="lg:col-span-1 animate-fade-in-up">
+          <span class="text-4xl mb-4 block">🐕</span>
+          <h2 class="text-3xl mb-4">My Best Friend</h2>
+          <p class="text-primary-600 leading-relaxed mb-4">
+            Every entrepreneur needs a good co-founder. Mine happens to have four legs 
+            and unconditional love for anyone who brings treats.
+          </p>
+          <p class="text-primary-500 text-sm">
+            [Add your dog's name and story here]
+          </p>
+        </div>
+        
+        <div class="lg:col-span-2">
+          <PhotoGallery photos={dogPhotos} columns={3} />
+          <p class="text-center text-primary-400 text-sm mt-4">
+            Add photos to /public/images/personal/ and update /src/content/gallery/
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Mexico City Section -->
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-3 gap-12 items-start">
+        <div class="lg:col-span-2 order-2 lg:order-1">
+          <PhotoGallery photos={mexicoPhotos} columns={2} />
+        </div>
+        
+        <div class="lg:col-span-1 order-1 lg:order-2 animate-fade-in-up">
+          <span class="text-4xl mb-4 block">🇲🇽</span>
+          <h2 class="text-3xl mb-4">Mexico City</h2>
+          <p class="text-primary-600 leading-relaxed mb-4">
+            Part-time home, full-time love affair. Mexico City has become my escape 
+            from the New York hustle — a place where the pace is different and the 
+            tacos are always incredible.
+          </p>
+          <p class="text-primary-600 leading-relaxed">
+            From the tree-lined streets of Roma Norte to the vibrant markets of Coyoacán, 
+            every neighborhood tells a different story.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Sailing Section -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-3 gap-12 items-start">
+        <div class="lg:col-span-1 animate-fade-in-up">
+          <span class="text-4xl mb-4 block">⛵</span>
+          <h2 class="text-3xl mb-4">On the Water</h2>
+          <p class="text-primary-600 leading-relaxed mb-4">
+            There's something about sailing that resets everything. When you're on the water, 
+            the emails can wait, the meetings don't matter, and the only thing that counts is 
+            the wind and the waves.
+          </p>
+          <p class="text-primary-600 leading-relaxed">
+            It's where I do my best thinking — and my best not-thinking.
+          </p>
+        </div>
+        
+        <div class="lg:col-span-2">
+          <PhotoGallery photos={sailingPhotos} columns={3} />
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Philosophy -->
+  <section class="section-padding bg-primary-900 text-primary-50">
+    <div class="container-narrow text-center">
+      <blockquote class="text-2xl md:text-3xl font-serif italic leading-relaxed mb-8">
+        "The goal isn't to be busy. The goal is to build a life where work and play 
+        aren't opposites — where success includes time for the dog, the adventures, 
+        and the people who matter."
+      </blockquote>
+      <p class="text-accent-400">— How I try to live</p>
+    </div>
+  </section>
+  
+  <!-- Other Interests -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Other Things I Love" 
+        subtitle="A few more pieces of the puzzle."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-3 gap-8 text-center">
+        <div class="card animate-on-scroll">
+          <span class="text-3xl mb-4 block">📚</span>
+          <h3 class="text-xl font-semibold mb-2">Reading</h3>
+          <p class="text-primary-600 text-sm">
+            Mostly non-fiction about business, psychology, and history. Always open to recommendations.
+          </p>
+        </div>
+        
+        <div class="card animate-on-scroll stagger-1">
+          <span class="text-3xl mb-4 block">🍳</span>
+          <h3 class="text-xl font-semibold mb-2">Cooking</h3>
+          <p class="text-primary-600 text-sm">
+            Mexican cuisine has been my recent obsession. The markets in CDMX are incredible inspiration.
+          </p>
+        </div>
+        
+        <div class="card animate-on-scroll stagger-2">
+          <span class="text-3xl mb-4 block">✈️</span>
+          <h3 class="text-xl font-semibold mb-2">Travel</h3>
+          <p class="text-primary-600 text-sm">
+            Split between Mexico, New York, and wherever speaking engagements take me next.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Connect CTA -->
+  <section class="section-padding bg-gradient-to-br from-accent-50 to-primary-50">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6">Let's Connect</h2>
+      <p class="text-xl text-primary-600 mb-8">
+        Whether it's about business, sailing spots, or the best tacos in Roma Norte — 
+        I'm always up for a conversation.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="mailto:hello@example.com" class="btn-primary">
+          Say Hello
+        </a>
+        <a href="/about" class="btn-secondary">
+          Back to Professional Me
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

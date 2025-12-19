@@ -1,0 +1,23 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  animated?: boolean;
+}
+
+const { title, subtitle, align = 'left', animated = true } = Astro.props;
+
+const alignClasses = {
+  left: 'text-left',
+  center: 'text-center mx-auto',
+};
+---
+
+<header class={`max-w-3xl mb-12 ${alignClasses[align]} ${animated ? 'animate-on-scroll' : ''}`}>
+  <h2 class="mb-4">{title}</h2>
+  {subtitle && (
+    <p class="text-lg md:text-xl text-primary-600 leading-relaxed">{subtitle}</p>
+  )}
+</header>
+

@@ -1,0 +1,261 @@
+---
+import BrooklynFiLayout from '../layouts/BrooklynFiLayout.astro';
+import Timeline from '../components/Timeline.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+
+const timeline = [
+  {
+    year: '2024',
+    title: 'Board Member',
+    role: 'Strategic Oversight',
+    description: 'Transitioned to board role to focus on strategic direction while empowering the next generation of leadership.',
+    highlights: [
+      'Continued strategic guidance',
+      'Focus on Gemifi development',
+      'Speaking and thought leadership',
+    ],
+  },
+  {
+    year: '2022',
+    title: 'Scaling & Systemization',
+    role: 'CEO',
+    description: 'Built robust systems and processes to handle growth while maintaining the personalized service that defines us.',
+    highlights: [
+      'Launched Gemifi platform',
+      'Expanded to 20+ team members',
+      'Systematized client experience',
+    ],
+  },
+  {
+    year: '2020',
+    title: 'Pandemic Leadership',
+    role: 'CEO',
+    description: 'Navigated unprecedented market volatility while supporting clients through one of the most challenging periods in recent history.',
+    highlights: [
+      'Zero client attrition during COVID',
+      'Successful remote transition',
+      'Record new client growth',
+    ],
+  },
+  {
+    year: '2018',
+    title: 'Rapid Growth',
+    role: 'CEO & Co-Founder',
+    description: 'Hit our stride with a clear value proposition and began scaling the team and client base significantly.',
+    highlights: [
+      'AUM milestone reached',
+      'Hired key team members',
+      'Refined service model',
+    ],
+  },
+  {
+    year: '2017',
+    title: 'Finding Product-Market Fit',
+    role: 'Co-Founder',
+    description: 'Discovered our niche serving entrepreneurs and tech professionals with complex equity compensation.',
+    highlights: [
+      'Defined ideal client profile',
+      'Built referral network',
+      'First major client wins',
+    ],
+  },
+  {
+    year: '2016',
+    title: 'Brooklyn Fi Founded',
+    role: 'Co-Founder',
+    description: 'Started Brooklyn Fi with a vision to provide honest, comprehensive financial advice to entrepreneurs and professionals.',
+    highlights: [
+      'Incorporated the firm',
+      'First clients onboarded',
+      'Built foundation',
+    ],
+  },
+];
+
+const contributions = [
+  {
+    title: 'Company Culture',
+    description: 'Established a culture of transparency, continuous learning, and genuine care for clients and team members.',
+    icon: '🎯',
+  },
+  {
+    title: 'Client Experience',
+    description: 'Designed the end-to-end client experience, from first meeting to ongoing relationships.',
+    icon: '✨',
+  },
+  {
+    title: 'Business Development',
+    description: 'Built and nurtured key partnerships and referral relationships that drive growth.',
+    icon: '📈',
+  },
+  {
+    title: 'Technology Strategy',
+    description: 'Led the vision for Gemifi and our broader technology stack to enhance service delivery.',
+    icon: '⚡',
+  },
+  {
+    title: 'Thought Leadership',
+    description: 'Created The Liquidity Event podcast and established Brooklyn Fi as an industry voice.',
+    icon: '🎙️',
+  },
+  {
+    title: 'Team Development',
+    description: 'Recruited, trained, and mentored team members who now lead key functions.',
+    icon: '👥',
+  },
+];
+
+const stats = [
+  { value: '8+', label: 'Years' },
+  { value: '$XXX M', label: 'AUM Grown' },
+  { value: 'XX+', label: 'Team Members' },
+  { value: 'XXX+', label: 'Families Served' },
+];
+---
+
+<BrooklynFiLayout title="Brooklyn Fi | Shane">
+  <!-- Hero -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-fade-in-up">
+          <div class="flex items-center gap-3 mb-6">
+            <!-- Brooklyn Fi logo placeholder -->
+            <div class="w-12 h-12 bg-brooklynfi-primary rounded-sm flex items-center justify-center text-white font-bold">
+              BFi
+            </div>
+            <span class="text-sm text-brooklynfi-primary font-medium">Brooklyn Fi</span>
+          </div>
+          
+          <h1 class="mb-6">
+            My Journey at<br />
+            <span class="text-gradient">Brooklyn Fi</span>
+          </h1>
+          
+          <p class="text-xl text-primary-600 leading-relaxed mb-6">
+            From co-founder to board member, I've spent eight years building Brooklyn Fi into 
+            a trusted financial advisory firm serving entrepreneurs and professionals.
+          </p>
+          
+          <p class="text-lg text-primary-500 leading-relaxed mb-8">
+            What started as a vision to provide honest, comprehensive financial advice has grown 
+            into a team of dedicated professionals serving hundreds of families.
+          </p>
+          
+          <a 
+            href="https://www.brooklynfi.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="btn-primary"
+          >
+            Visit Brooklyn Fi
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+        
+        <div class="relative animate-fade-in stagger-2">
+          <!-- Placeholder for Brooklyn Fi related image -->
+          <div class="aspect-[4/3] bg-gradient-to-br from-brooklynfi-light to-brooklynfi-accent/20 rounded-sm flex items-center justify-center border border-brooklynfi-accent/20">
+            <p class="text-brooklynfi-primary text-center p-8">
+              [Brooklyn Fi Image]<br />
+              <span class="text-sm">Team photo or office</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Stats -->
+  <section class="py-12 bg-brooklynfi-primary text-white">
+    <div class="container-wide">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        {stats.map((stat, index) => (
+          <div class={`animate-on-scroll stagger-${index + 1}`}>
+            <p class="text-4xl md:text-5xl font-serif font-bold text-brooklynfi-accent mb-1">
+              {stat.value}
+            </p>
+            <p class="text-brooklynfi-light/70 text-sm">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Timeline -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <SectionHeader 
+        title="8 Years of Growth" 
+        subtitle="From a two-person startup to a thriving firm, here's how the journey unfolded."
+        align="center"
+      />
+      
+      <Timeline items={timeline} />
+    </div>
+  </section>
+  
+  <!-- Key Contributions -->
+  <section class="section-padding bg-brooklynfi-light">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Key Contributions" 
+        subtitle="The areas where I've had the most impact on Brooklyn Fi's growth and success."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {contributions.map((item, index) => (
+          <div class={`card animate-on-scroll stagger-${(index % 3) + 1}`}>
+            <span class="text-3xl mb-4 block">{item.icon}</span>
+            <h3 class="text-xl font-semibold mb-2 text-brooklynfi-primary">{item.title}</h3>
+            <p class="text-primary-600">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Current Role -->
+  <section class="section-padding">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6">Current Role: Board Member</h2>
+      <p class="text-xl text-primary-600 leading-relaxed mb-8">
+        In 2024, I transitioned from CEO to Board Member, allowing me to focus on 
+        strategic initiatives, Gemifi development, and speaking engagements while 
+        empowering the talented team we've built to lead day-to-day operations.
+      </p>
+      <p class="text-lg text-primary-500 leading-relaxed">
+        I remain deeply committed to Brooklyn Fi's mission and continue to provide 
+        guidance on major decisions, company culture, and long-term strategy.
+      </p>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="section-padding bg-brooklynfi-primary text-white">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6 text-white">Interested in Working with Brooklyn Fi?</h2>
+      <p class="text-brooklynfi-light/80 text-lg mb-8">
+        Brooklyn Fi helps entrepreneurs and professionals build, protect, and enjoy their wealth. 
+        If you're curious about what we can do for you, I'd love to make an introduction.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a 
+          href="https://www.brooklynfi.com/contact" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="btn-accent"
+        >
+          Contact Brooklyn Fi
+        </a>
+        <a href="/gemifi" class="btn-secondary border-brooklynfi-accent text-white hover:bg-brooklynfi-accent hover:text-brooklynfi-primary">
+          Learn About Gemifi
+        </a>
+      </div>
+    </div>
+  </section>
+</BrooklynFiLayout>
+

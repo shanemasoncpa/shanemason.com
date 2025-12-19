@@ -1,0 +1,115 @@
+---
+interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+  role?: string;
+  highlights?: string[];
+}
+
+interface Props {
+  items: TimelineItem[];
+  orientation?: 'vertical' | 'horizontal';
+}
+
+const { items, orientation = 'vertical' } = Astro.props;
+---
+
+{orientation === 'vertical' ? (
+  <div class="relative">
+    <!-- Vertical Line -->
+    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px timeline-line bg-primary-300 transform md:-translate-x-1/2"></div>
+    
+    <div class="space-y-12">
+      {items.map((item, index) => (
+        <div class={`relative flex flex-col md:flex-row gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+          <!-- Timeline Dot -->
+          <div class="absolute left-4 md:left-1/2 w-3 h-3 timeline-dot bg-accent-500 rounded-full border-4 border-primary-50 transform -translate-x-1/2 mt-2 z-10"></div>
+          
+          <!-- Year Badge (Mobile) -->
+          <div class="md:hidden pl-10">
+            <span class="text-sm font-mono text-accent-600">{item.year}</span>
+          </div>
+          
+          <!-- Content -->
+          <div class={`md:w-1/2 pl-10 md:pl-0 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
+            <!-- Year Badge (Desktop) -->
+            <span class="hidden md:inline-block text-sm font-mono text-accent-600 mb-2">{item.year}</span>
+            
+            <div class="card">
+              <h3 class="text-xl font-semibold mb-1">{item.title}</h3>
+              {item.role && (
+                <p class="text-sm text-accent-600 font-medium mb-3">{item.role}</p>
+              )}
+              <p class="text-primary-600">{item.description}</p>
+              
+              {item.highlights && item.highlights.length > 0 && (
+                <ul class={`mt-4 space-y-2 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
+                  {item.highlights.map(highlight => (
+                    <li class="text-sm text-primary-500 flex items-start gap-2">
+                      <span class="text-accent-500 mt-1">→</span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          
+          <!-- Spacer for alternating layout -->
+          <div class="hidden md:block md:w-1/2"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+) : (
+  <!-- Horizontal Timeline -->
+  <div class="relative overflow-x-auto pb-8">
+    <div class="flex gap-8 min-w-max px-4">
+      {items.map((item, index) => (
+        <div class="relative flex flex-col items-center w-64">
+          <!-- Top content -->
+          {index % 2 === 0 && (
+            <div class="mb-8 text-center">
+              <div class="card">
+                <h3 class="text-lg font-semibold mb-1">{item.title}</h3>
+                {item.role && (
+                  <p class="text-xs text-accent-600 font-medium mb-2">{item.role}</p>
+                )}
+                <p class="text-sm text-primary-600">{item.description}</p>
+              </div>
+            </div>
+          )}
+          
+          <!-- Timeline line and dot -->
+          <div class="relative w-full flex items-center justify-center">
+            {index > 0 && (
+              <div class="absolute right-1/2 w-1/2 h-px timeline-line bg-primary-300"></div>
+            )}
+            {index < items.length - 1 && (
+              <div class="absolute left-1/2 w-1/2 h-px timeline-line bg-primary-300"></div>
+            )}
+            <div class="w-4 h-4 timeline-dot bg-accent-500 rounded-full border-4 border-primary-50 z-10"></div>
+          </div>
+          
+          <!-- Year -->
+          <span class="mt-2 text-sm font-mono text-accent-600">{item.year}</span>
+          
+          <!-- Bottom content -->
+          {index % 2 !== 0 && (
+            <div class="mt-8 text-center">
+              <div class="card">
+                <h3 class="text-lg font-semibold mb-1">{item.title}</h3>
+                {item.role && (
+                  <p class="text-xs text-accent-600 font-medium mb-2">{item.role}</p>
+                )}
+                <p class="text-sm text-primary-600">{item.description}</p>
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+

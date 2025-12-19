@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { getCollection } from 'astro:content';
+
+// Try to get media appearances, handle gracefully if empty
+let mediaItems: any[] = [];
+try {
+  mediaItems = await getCollection('media');
+} catch (e) {
+  mediaItems = [];
+}
+
+const sortedMedia = mediaItems.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const articles = sortedMedia.filter(m => m.data.type === 'article');
+const podcasts = sortedMedia.filter(m => m.data.type === 'podcast');
+const interviews = sortedMedia.filter(m => m.data.type === 'interview' || m.data.type === 'video');
+
+// Placeholder data for demonstration
+const placeholderArticles = [
+  {
+    title: "The Future of Financial Planning",
+    publication: "Forbes",
+    date: new Date("2024-02-15"),
+    url: "#",
+    description: "Quoted on how technology is reshaping wealth management for entrepreneurs.",
+  },
+  {
+    title: "What Founders Need to Know Before an Exit",
+    publication: "TechCrunch",
+    date: new Date("2024-01-20"),
+    url: "#",
+    description: "Expert commentary on common mistakes founders make when selling their companies.",
+  },
+  {
+    title: "Building a Financial Advisory Firm from Scratch",
+    publication: "Financial Planning Magazine",
+    date: new Date("2023-11-10"),
+    url: "#",
+    description: "Feature article on the Brooklyn Fi story and lessons for aspiring advisors.",
+  },
+];
+
+const placeholderPodcasts = [
+  {
+    title: "Entrepreneur Money Stories",
+    publication: "How I Built This",
+    date: new Date("2024-01-10"),
+    url: "#",
+    description: "A deep dive into the founding of Brooklyn Fi and pivotal moments along the way.",
+  },
+  {
+    title: "Financial Freedom for Founders",
+    publication: "The Fintech Files",
+    date: new Date("2023-12-05"),
+    url: "#",
+    description: "Discussing the intersection of technology and financial advice.",
+  },
+  {
+    title: "From Advisor to Founder",
+    publication: "Career Pivots Podcast",
+    date: new Date("2023-10-22"),
+    url: "#",
+    description: "The journey from working in finance to building a financial services company.",
+  },
+];
+
+const displayArticles = articles.length > 0 ? articles.map(a => a.data) : placeholderArticles;
+const displayPodcasts = podcasts.length > 0 ? podcasts.map(p => p.data) : placeholderPodcasts;
+---
+
+<BaseLayout title="Media | Shane" description="Articles, interviews, and podcast appearances.">
+  <!-- Hero -->
+  <section class="section-padding bg-gradient-to-b from-primary-100 to-white">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Media Appearances" 
+        subtitle="A collection of articles I've been quoted in, podcasts I've guested on, and interviews I've given over the years."
+      />
+    </div>
+  </section>
+  
+  <!-- Articles Section -->
+  <section class="section-padding border-b border-primary-200">
+    <div class="container-wide">
+      <h2 class="text-3xl md:text-4xl mb-8 animate-on-scroll">Articles & Features</h2>
+      
+      <div class="space-y-6">
+        {displayArticles.map((article, index) => (
+          <a 
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`card group flex flex-col md:flex-row md:items-center gap-4 animate-on-scroll stagger-${(index % 4) + 1}`}
+          >
+            <!-- Publication Logo Placeholder -->
+            <div class="w-16 h-16 bg-primary-100 rounded-sm flex items-center justify-center flex-shrink-0">
+              <span class="text-primary-400 text-xs font-medium text-center">{article.publication.substring(0, 2).toUpperCase()}</span>
+            </div>
+            
+            <div class="flex-1">
+              <p class="text-sm text-primary-500 mb-1">
+                {article.publication} · {article.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              </p>
+              <h3 class="text-lg font-semibold group-hover:text-accent-600 transition-colors">
+                {article.title}
+                <svg class="inline-block w-4 h-4 ml-1 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </h3>
+              {article.description && (
+                <p class="text-primary-600 text-sm mt-1">{article.description}</p>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      {displayArticles.length === 0 && (
+        <p class="text-center text-primary-500 py-8">
+          Add your media appearances to /src/content/media/ as JSON files
+        </p>
+      )}
+    </div>
+  </section>
+  
+  <!-- Podcast Appearances Section -->
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide">
+      <h2 class="text-3xl md:text-4xl mb-8 animate-on-scroll">Podcast Appearances</h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {displayPodcasts.map((podcast, index) => (
+          <a 
+            href={podcast.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`card group animate-on-scroll stagger-${(index % 6) + 1}`}
+          >
+            <!-- Podcast artwork placeholder -->
+            <div class="aspect-square bg-gradient-to-br from-primary-200 to-primary-300 rounded-sm mb-4 flex items-center justify-center">
+              <svg class="w-12 h-12 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+              </svg>
+            </div>
+            
+            <p class="text-sm text-primary-500 mb-1">
+              {podcast.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+            </p>
+            <h3 class="font-semibold text-lg group-hover:text-accent-600 transition-colors mb-1">
+              {podcast.title}
+            </h3>
+            <p class="text-accent-600 text-sm font-medium">{podcast.publication}</p>
+            {podcast.description && (
+              <p class="text-primary-600 text-sm mt-2 line-clamp-2">{podcast.description}</p>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Interviews / Video Section -->
+  {interviews.length > 0 && (
+    <section class="section-padding">
+      <div class="container-wide">
+        <h2 class="text-3xl md:text-4xl mb-8 animate-on-scroll">Video Interviews</h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          {interviews.map((interview, index) => (
+            <a 
+              href={interview.data.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`card group animate-on-scroll stagger-${index + 1}`}
+            >
+              <div class="aspect-video bg-primary-100 rounded-sm mb-4 flex items-center justify-center">
+                <svg class="w-16 h-16 text-primary-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-lg group-hover:text-accent-600 transition-colors">
+                {interview.data.title}
+              </h3>
+              <p class="text-primary-500 text-sm mt-1">{interview.data.publication}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+  
+  <!-- Press Contact CTA -->
+  <section class="section-padding bg-primary-900 text-primary-50">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6">Press & Media Inquiries</h2>
+      <p class="text-primary-300 text-lg mb-8">
+        I'm available for interviews, expert commentary, and podcast appearances. 
+        Topics include entrepreneurship, financial planning, fintech, and business exits.
+      </p>
+      <a href="mailto:press@example.com" class="btn-accent">
+        Contact for Media
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+

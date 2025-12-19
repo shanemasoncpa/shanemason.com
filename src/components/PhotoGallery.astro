@@ -1,0 +1,146 @@
+---
+interface Photo {
+  src: string;
+  alt: string;
+  caption?: string;
+  category?: string;
+}
+
+interface Props {
+  photos: Photo[];
+  columns?: 2 | 3 | 4;
+  showCaptions?: boolean;
+}
+
+const { photos, columns = 3, showCaptions = true } = Astro.props;
+
+const gridClasses = {
+  2: 'grid-cols-1 md:grid-cols-2',
+  3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
+};
+---
+
+<div class="photo-gallery">
+  <div class={`grid ${gridClasses[columns]} gap-4`}>
+    {photos.map((photo, index) => (
+      <figure 
+        class="group relative overflow-hidden rounded-sm bg-primary-100 cursor-pointer"
+        data-index={index}
+      >
+        <div class="aspect-[4/3] overflow-hidden">
+          <img 
+            src={photo.src} 
+            alt={photo.alt}
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+        </div>
+        
+        {showCaptions && photo.caption && (
+          <figcaption class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-primary-900/80 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <p class="text-sm">{photo.caption}</p>
+          </figcaption>
+        )}
+        
+        {photo.category && (
+          <span class="absolute top-3 left-3 px-2 py-1 text-xs bg-white/90 text-primary-900 rounded-sm">
+            {photo.category}
+          </span>
+        )}
+      </figure>
+    ))}
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-50 bg-primary-900/95 hidden items-center justify-center p-4">
+  <button id="lightbox-close" class="absolute top-4 right-4 text-white hover:text-accent-400 transition-colors" aria-label="Close lightbox">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  
+  <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-accent-400 transition-colors" aria-label="Previous photo">
+    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+  
+  <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-accent-400 transition-colors" aria-label="Next photo">
+    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+  
+  <div class="max-w-5xl max-h-[85vh] relative">
+    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[85vh] object-contain" />
+    <p id="lightbox-caption" class="absolute bottom-0 left-0 right-0 p-4 text-white text-center bg-primary-900/50"></p>
+  </div>
+</div>
+
+<script define:vars={{ photos }}>
+  const gallery = document.querySelector('.photo-gallery');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  
+  let currentIndex = 0;
+  
+  const showPhoto = (index) => {
+    currentIndex = index;
+    const photo = photos[index];
+    lightboxImg.src = photo.src;
+    lightboxImg.alt = photo.alt;
+    lightboxCaption.textContent = photo.caption || '';
+    lightboxCaption.style.display = photo.caption ? 'block' : 'none';
+  };
+  
+  const openLightbox = (index) => {
+    showPhoto(index);
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+  
+  const closeLightbox = () => {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+  
+  const showPrev = () => {
+    currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+    showPhoto(currentIndex);
+  };
+  
+  const showNext = () => {
+    currentIndex = (currentIndex + 1) % photos.length;
+    showPhoto(currentIndex);
+  };
+  
+  // Event listeners
+  gallery?.querySelectorAll('figure').forEach((fig, index) => {
+    fig.addEventListener('click', () => openLightbox(index));
+  });
+  
+  closeBtn?.addEventListener('click', closeLightbox);
+  prevBtn?.addEventListener('click', showPrev);
+  nextBtn?.addEventListener('click', showNext);
+  
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('hidden')) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+    }
+  });
+</script>
+

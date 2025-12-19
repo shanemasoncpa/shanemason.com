@@ -1,0 +1,56 @@
+/* Gemifi Brand Overrides */
+.gemifi-theme {
+  --brand-primary: #6b46c1;
+  --brand-secondary: #805ad5;
+  --brand-accent: #b794f4;
+  --brand-light: #faf5ff;
+}
+
+.gemifi-theme h1,
+.gemifi-theme h2,
+.gemifi-theme h3 {
+  @apply text-gemifi-primary;
+}
+
+.gemifi-theme .btn-primary {
+  @apply bg-gemifi-primary hover:bg-gemifi-secondary;
+}
+
+.gemifi-theme .btn-accent {
+  @apply bg-gemifi-accent hover:bg-gemifi-secondary text-gemifi-primary;
+}
+
+.gemifi-theme .text-gradient {
+  @apply bg-gradient-to-r from-gemifi-primary to-gemifi-accent bg-clip-text text-transparent;
+}
+
+.gemifi-theme .card {
+  @apply border-gemifi-accent/20 hover:border-gemifi-accent/40;
+}
+
+.gemifi-theme ::selection {
+  @apply bg-gemifi-accent/30 text-gemifi-primary;
+}
+
+/* Timeline specific styles for Gemifi */
+.gemifi-theme .timeline-line {
+  @apply bg-gemifi-accent;
+}
+
+.gemifi-theme .timeline-dot {
+  @apply bg-gemifi-primary border-gemifi-accent;
+}
+
+.gemifi-theme .timeline-dot.active {
+  @apply bg-gemifi-accent;
+}
+
+/* Product update cards */
+.gemifi-theme .update-card {
+  @apply bg-gradient-to-br from-gemifi-light to-white border-gemifi-accent/20;
+}
+
+.gemifi-theme .version-badge {
+  @apply bg-gemifi-primary text-white text-sm font-mono px-3 py-1 rounded-full;
+}
+

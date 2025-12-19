@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Timeline from '../components/Timeline.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+
+const careerTimeline = [
+  {
+    year: '2024',
+    title: 'Board Member',
+    role: 'Brooklyn Fi',
+    description: 'Transitioned to board oversight while focusing on new ventures and speaking engagements.',
+    highlights: ['Strategic advisory', 'Industry thought leadership', 'Gemifi development'],
+  },
+  {
+    year: '2020',
+    title: 'CEO & Co-Founder',
+    role: 'Brooklyn Fi',
+    description: 'Scaled the firm through unprecedented market conditions and expanded service offerings.',
+    highlights: ['Team growth to 20+', 'Launched Gemifi platform', 'Podcast launch'],
+  },
+  {
+    year: '2016',
+    title: 'Founded Brooklyn Fi',
+    role: 'Co-Founder',
+    description: 'Started a financial advisory firm focused on helping entrepreneurs and tech professionals.',
+    highlights: ['First clients', 'Built founding team', 'Developed core methodology'],
+  },
+  {
+    year: '2012',
+    title: 'Finance Career Begins',
+    role: 'Financial Advisor',
+    description: 'Began career in financial services, quickly recognizing the need for better solutions for entrepreneurs.',
+    highlights: ['Industry certifications', 'Client relationship building'],
+  },
+];
+
+const skills = [
+  { name: 'Financial Planning', level: 95 },
+  { name: 'Public Speaking', level: 90 },
+  { name: 'Business Strategy', level: 88 },
+  { name: 'Product Development', level: 82 },
+  { name: 'Team Leadership', level: 85 },
+  { name: 'Content Creation', level: 78 },
+];
+
+const values = [
+  {
+    title: 'Transparency',
+    description: 'Clear communication and honest advice, even when it\'s not what you want to hear.',
+    icon: '◈',
+  },
+  {
+    title: 'Innovation',
+    description: 'Constantly seeking better ways to solve problems and deliver value.',
+    icon: '◎',
+  },
+  {
+    title: 'Impact',
+    description: 'Focused on creating meaningful change in people\'s financial lives.',
+    icon: '◆',
+  },
+  {
+    title: 'Balance',
+    description: 'Success means nothing without time for sailing, travel, and the ones we love.',
+    icon: '❋',
+  },
+];
+---
+
+<BaseLayout title="About | Shane" description="Learn about my journey as an entrepreneur, speaker, and builder.">
+  <!-- Hero -->
+  <section class="section-padding bg-gradient-to-b from-primary-100 to-white">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-fade-in-up">
+          <p class="text-accent-600 font-medium mb-4">About Me</p>
+          <h1 class="mb-6">
+            Building businesses,<br />
+            <span class="text-gradient">sharing knowledge</span>
+          </h1>
+          <p class="text-xl text-primary-600 leading-relaxed mb-6">
+            I'm an entrepreneur who believes that great financial advice can change lives. 
+            Over the past decade, I've built companies, launched products, and helped hundreds 
+            of people navigate the complexities of wealth and business.
+          </p>
+          <p class="text-lg text-primary-500 leading-relaxed">
+            When I'm not working, you'll find me sailing, exploring Mexico City where I now 
+            call home part-time, or spending time with my dog.
+          </p>
+        </div>
+        
+        <div class="relative animate-fade-in stagger-2">
+          <!-- Placeholder for profile photo -->
+          <div class="aspect-[4/5] bg-gradient-to-br from-primary-200 to-primary-300 rounded-sm flex items-center justify-center">
+            <p class="text-primary-500 text-center p-8">
+              [Your Photo Here]<br />
+              <span class="text-sm">Add to /public/images/profile.jpg</span>
+            </p>
+          </div>
+          <!-- Decorative element -->
+          <div class="absolute -bottom-4 -right-4 w-2/3 h-2/3 border-2 border-accent-400 rounded-sm -z-10"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- The Quirky Resume Section -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <SectionHeader 
+        title="The Journey" 
+        subtitle="Not your typical resume. Here's the story of how I got here, told through milestones rather than bullet points."
+        align="center"
+      />
+      
+      <Timeline items={careerTimeline} />
+    </div>
+  </section>
+  
+  <!-- Skills Visualization -->
+  <section class="section-padding bg-primary-900 text-primary-50">
+    <div class="container-wide">
+      <SectionHeader 
+        title="What I Bring" 
+        subtitle="Skills honed over years of building businesses, advising clients, and speaking on stages around the world."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {skills.map((skill, index) => (
+          <div class={`animate-on-scroll stagger-${(index % 3) + 1}`}>
+            <div class="flex justify-between mb-2">
+              <span class="font-medium">{skill.name}</span>
+              <span class="text-accent-400 font-mono text-sm">{skill.level}%</span>
+            </div>
+            <div class="h-2 bg-primary-800 rounded-full overflow-hidden">
+              <div 
+                class="h-full bg-gradient-to-r from-accent-500 to-accent-400 rounded-full transition-all duration-1000 ease-out"
+                style={`width: ${skill.level}%;`}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Values -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <SectionHeader 
+        title="Core Values" 
+        subtitle="The principles that guide everything I do, from business decisions to personal adventures."
+        align="center"
+      />
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {values.map((value, index) => (
+          <div class={`card text-center animate-on-scroll stagger-${index + 1}`}>
+            <span class="text-4xl text-accent-500 mb-4 block">{value.icon}</span>
+            <h3 class="text-xl font-semibold mb-2">{value.title}</h3>
+            <p class="text-primary-600 text-sm">{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Download Resume CTA -->
+  <section class="section-padding bg-gradient-to-br from-accent-50 to-white">
+    <div class="container-narrow text-center">
+      <h2 class="mb-6 animate-on-scroll">Want the Traditional Version?</h2>
+      <p class="text-xl text-primary-600 mb-8 animate-on-scroll stagger-1">
+        If you need a formal resume for professional purposes, I've got you covered.
+      </p>
+      <a href="/resume.pdf" class="btn-primary animate-on-scroll stagger-2" download>
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Download PDF Resume
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
