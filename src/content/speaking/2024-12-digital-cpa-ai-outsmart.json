@@ -1,0 +1,20 @@
+{
+  "title": "Bots, Books, and Bottom Lines: How Accountants Can Outsmart AI and Stay Ahead",
+  "event": "Digital CPA 2024",
+  "date": "2024-12-09",
+  "location": "Denver, CO",
+  "type": "Lecture",
+  "lengthMinutes": 50,
+  "topics": ["Artificial Intelligence", "Accounting", "Practice Management"],
+  "description": "In this session we'll explore the practical sides of utilizing the various A.I. tools on the marketplace to accomplish scalability within your firm. We'll provide examples of writing prompts, data reorganization, customizing communications at scale in both text and video, built-in tools of various software applications and more. The goal is to explore new features that you may want to implement in your practice or better use the ones you already have to solve capacity limitations.",
+  "learningObjectives": [
+    "Identify the key AI tools available in the marketplace that can enhance scalability within a firm",
+    "Demonstrate the application of AI tools by developing effective prompts for automation",
+    "Evaluate the potential of new AI features and existing tools for implementation"
+  ],
+  "sessionUrl": "https://aicpaconferences.com/live/1924/session/71000",
+  "slidesFile": "digital-cpa-2024-ai.pdf",
+  "upcoming": false,
+  "featured": true
+}
+

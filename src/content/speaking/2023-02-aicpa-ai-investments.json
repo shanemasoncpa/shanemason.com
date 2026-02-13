@@ -1,0 +1,20 @@
+{
+  "title": "A.I. and Investments",
+  "event": "AICPA & CIMA Engage 2023",
+  "date": "2023-02-07",
+  "location": "Las Vegas, NV",
+  "type": "Lecture",
+  "lengthMinutes": 50,
+  "coPresenters": ["AJ Ayers"],
+  "topics": ["Artificial Intelligence", "Investments"],
+  "description": "When ChatGPT was released to the public in late 2022, the world gasped at its ability to think and converse like a human with all the knowledge of the internet behind it. Now that we've had some time to test and use the AI tool, accountants and financial planners are getting creative with using its ability to synthesize portfolio data and provide investment commentary. We'll cover how to use ChatGPT and other AI tools in your practice and show examples of where AI excels and fails. We'll cover the pitfalls of AI and how due diligence is still a human endeavor.",
+  "learningObjectives": [
+    "Learn how to use AI to communicate with clients",
+    "Learn how to use AI for portfolio analysis",
+    "Learn how to make sure your client data is safe when using cutting edge AI tools"
+  ],
+  "sessionUrl": "https://aicpaconferences.com/live/1873/session/68258",
+  "upcoming": false,
+  "featured": true
+}
+

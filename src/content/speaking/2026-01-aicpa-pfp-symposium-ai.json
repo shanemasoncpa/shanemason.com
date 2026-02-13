@@ -1,0 +1,23 @@
+{
+  "title": "AI Tools Rapid-Fire Showcase",
+  "event": "AICPA PFP Symposium",
+  "date": "2026-01-23",
+  "location": "San Diego, CA",
+  "type": "Lecture",
+  "lengthMinutes": 75,
+  "coPresenters": ["Tom Trainor"],
+  "topics": ["Artificial Intelligence", "Practice Management"],
+  "description": "Artificial intelligence is no longer theoretical—it's reshaping the way personal financial planners work today. In this highly interactive \"rapid-fire\" session, two panelists will each showcase the AI tools they find most valuable in their daily practice, from client communication and research to reporting and workflow efficiency. Attendees will see live demonstrations, hear candid perspectives on what works (and what doesn't), and be invited to share their own experiences with emerging AI apps. Designed for experienced professionals, this 75-minute session moves fast, sparks dialogue, and delivers practical takeaways you can put into practice immediately. Whether you're an early adopter or still cautious, you'll leave with a clearer picture of how AI can augment professional judgment, deepen client relationships, and streamline firm operations.",
+  "sessionUrl": "https://tools.eventpower.com/website_gizmos/widget/speaker_detail_v1/26AICPA-PFP?key=a371ec&speaker_id=458624",
+  "slidesFile": "aicpa-pfp-2026-ai-tools.pptx",
+  "upcoming": false,
+  "featured": true,
+  "evaluationScores": {
+    "knowledge": 4.95,
+    "presentation": 4.84,
+    "relevance": 4.85,
+    "materials": 4.86,
+    "overall": 97.54
+  }
+}
+

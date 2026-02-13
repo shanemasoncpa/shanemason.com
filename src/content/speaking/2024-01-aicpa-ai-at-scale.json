@@ -1,0 +1,20 @@
+{
+  "title": "Customizing A.I. at Scale",
+  "event": "AICPA PFP",
+  "date": "2024-01-17",
+  "location": "Austin, TX",
+  "type": "Lecture",
+  "lengthMinutes": 50,
+  "coPresenters": ["Dr. Brianne Smith"],
+  "topics": ["Artificial Intelligence", "Practice Management"],
+  "description": "Introduction to A.I., increased popularity, key players, key terms. Demo of prompt engineering and tools with examples of how to use it in your practice. What the future holds and how to be more human.",
+  "learningObjectives": [
+    "Learn how to use AI for tax and investment research",
+    "Learn how to use A.I. to communicate with clients",
+    "Learn how to use A.I. for practice management",
+    "Learn how to make sure your client data is safe when using cutting edge A.I. tools"
+  ],
+  "upcoming": false,
+  "featured": false
+}
+

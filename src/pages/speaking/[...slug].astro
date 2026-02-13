@@ -1,0 +1,342 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const events = await getCollection('speaking');
+  return events.map((event) => ({
+    params: { slug: event.id.replace('.json', '') },
+    props: { event },
+  }));
+}
+
+const { event } = Astro.props;
+const data = event.data;
+
+// Format the date nicely
+const dateFormatted = data.date.toLocaleDateString('en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+// Get type badge color
+const typeColors: Record<string, string> = {
+  Lecture: 'bg-blue-100 text-blue-800',
+  Panel: 'bg-purple-100 text-purple-800',
+  Workshop: 'bg-green-100 text-green-800',
+  Keynote: 'bg-amber-100 text-amber-800',
+};
+const typeColor = typeColors[data.type] || 'bg-gray-100 text-gray-800';
+---
+
+<BaseLayout 
+  title={`${data.title} | Speaking`} 
+  description={data.description || `${data.title} at ${data.event}`}
+>
+  <!-- Hero -->
+  <section class="section-padding bg-gradient-to-b from-accent-50 to-white">
+    <div class="container-wide">
+      <a href="/speaking" class="inline-flex items-center text-accent-600 hover:text-accent-700 mb-8 group">
+        <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Speaking
+      </a>
+      
+      <div class="max-w-4xl">
+        <div class="flex flex-wrap gap-3 mb-6">
+          <span class={`px-3 py-1 rounded-full text-sm font-medium ${typeColor}`}>
+            {data.type}
+          </span>
+          {data.upcoming && (
+            <span class="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+              Upcoming
+            </span>
+          )}
+          {data.topics?.map((topic) => (
+            <span class="px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-700">
+              {topic}
+            </span>
+          ))}
+        </div>
+        
+        <h1 class="mb-4 animate-fade-in-up">{data.title}</h1>
+        
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-lg text-primary-600 mb-6">
+          <span class="font-medium text-primary-900">{data.event}</span>
+          <span class="flex items-center">
+            <svg class="w-5 h-5 mr-2 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {data.location}
+          </span>
+          <span class="flex items-center">
+            <svg class="w-5 h-5 mr-2 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {dateFormatted}
+          </span>
+          {data.lengthMinutes && (
+            <span class="flex items-center">
+              <svg class="w-5 h-5 mr-2 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {data.lengthMinutes} minutes
+            </span>
+          )}
+        </div>
+        
+        {data.coPresenters && data.coPresenters.length > 0 && (
+          <p class="text-primary-600">
+            <span class="font-medium">Co-presented with:</span> {data.coPresenters.join(', ')}
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Main Content -->
+  <section class="section-padding">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <!-- Main Column -->
+        <div class="lg:col-span-2 space-y-12">
+          <!-- Description -->
+          {data.description && (
+            <div class="animate-on-scroll">
+              <h2 class="text-2xl font-semibold mb-4">About This Talk</h2>
+              <p class="text-lg text-primary-700 leading-relaxed">{data.description}</p>
+            </div>
+          )}
+          
+          <!-- Learning Objectives -->
+          {data.learningObjectives && data.learningObjectives.length > 0 && (
+            <div class="animate-on-scroll stagger-1">
+              <h2 class="text-2xl font-semibold mb-4">Learning Objectives</h2>
+              <ul class="space-y-3">
+                {data.learningObjectives.map((objective) => (
+                  <li class="flex items-start">
+                    <svg class="w-6 h-6 text-accent-500 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-primary-700">{objective}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          <!-- Video -->
+          {data.videoUrl && (
+            <div class="animate-on-scroll stagger-2">
+              <h2 class="text-2xl font-semibold mb-4">Watch the Recording</h2>
+              <VideoEmbed url={data.videoUrl} title={data.title} />
+            </div>
+          )}
+          
+          <!-- Commentary -->
+          {data.commentary && (
+            <div class="animate-on-scroll stagger-2">
+              <h2 class="text-2xl font-semibold mb-4">My Reflections</h2>
+              <div class="card-elevated border-l-4 border-accent-500">
+                <p class="text-primary-700 italic leading-relaxed">{data.commentary}</p>
+              </div>
+            </div>
+          )}
+
+          <!-- Evaluation Scores -->
+          {data.evaluationScores && (
+            <div class="animate-on-scroll stagger-3">
+              <h2 class="text-2xl font-semibold mb-4">Audience Evaluation</h2>
+              <div class="card-elevated">
+                <div class="grid sm:grid-cols-2 gap-6">
+                  {data.evaluationScores.knowledge && (
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-primary-600 font-medium">Knowledge</span>
+                        <span class="text-lg font-semibold text-primary-900">{data.evaluationScores.knowledge.toFixed(2)}</span>
+                      </div>
+                      <div class="h-2 bg-primary-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-accent-500 rounded-full" style={`width: ${(data.evaluationScores.knowledge / 5) * 100}%`}></div>
+                      </div>
+                    </div>
+                  )}
+                  {data.evaluationScores.presentation && (
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-primary-600 font-medium">Presentation</span>
+                        <span class="text-lg font-semibold text-primary-900">{data.evaluationScores.presentation.toFixed(2)}</span>
+                      </div>
+                      <div class="h-2 bg-primary-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-accent-500 rounded-full" style={`width: ${(data.evaluationScores.presentation / 5) * 100}%`}></div>
+                      </div>
+                    </div>
+                  )}
+                  {data.evaluationScores.relevance && (
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-primary-600 font-medium">Relevance</span>
+                        <span class="text-lg font-semibold text-primary-900">{data.evaluationScores.relevance.toFixed(2)}</span>
+                      </div>
+                      <div class="h-2 bg-primary-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-accent-500 rounded-full" style={`width: ${(data.evaluationScores.relevance / 5) * 100}%`}></div>
+                      </div>
+                    </div>
+                  )}
+                  {data.evaluationScores.materials && (
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-primary-600 font-medium">Materials</span>
+                        <span class="text-lg font-semibold text-primary-900">{data.evaluationScores.materials.toFixed(2)}</span>
+                      </div>
+                      <div class="h-2 bg-primary-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-accent-500 rounded-full" style={`width: ${(data.evaluationScores.materials / 5) * 100}%`}></div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                {data.evaluationScores.overall && (
+                  <div class="mt-6 pt-6 border-t border-primary-200">
+                    <div class="flex justify-between items-center">
+                      <span class="text-primary-700 font-semibold">Overall Score</span>
+                      <span class="text-2xl font-bold text-accent-600">{data.evaluationScores.overall.toFixed(1)}%</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <!-- Images Gallery -->
+          {data.images && data.images.length > 0 && (
+            <div class="animate-on-scroll stagger-3">
+              <h2 class="text-2xl font-semibold mb-4">Event Photos</h2>
+              <div class="grid sm:grid-cols-2 gap-4">
+                {data.images.map((image) => (
+                  <figure class="overflow-hidden rounded-sm">
+                    <img 
+                      src={image.src} 
+                      alt={image.alt} 
+                      class="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                    {image.caption && (
+                      <figcaption class="text-sm text-primary-500 mt-2">{image.caption}</figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          <!-- Feedback -->
+          {data.feedback && data.feedback.length > 0 && (
+            <div class="animate-on-scroll stagger-4">
+              <h2 class="text-2xl font-semibold mb-4">Audience Feedback</h2>
+              
+              {data.featuredFeedback && (
+                <blockquote class="card-elevated border-l-4 border-accent-500 mb-6">
+                  <p class="text-xl text-primary-700 italic">"{data.featuredFeedback}"</p>
+                </blockquote>
+              )}
+              
+              <div class="grid sm:grid-cols-2 gap-4">
+                {data.feedback.slice(0, 6).map((comment) => (
+                  <div class="card">
+                    <p class="text-primary-600 italic">"{comment}"</p>
+                  </div>
+                ))}
+              </div>
+              
+              {data.feedback.length > 6 && (
+                <p class="text-primary-500 text-center mt-4">
+                  + {data.feedback.length - 6} more reviews
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="space-y-6">
+          <!-- Resources Card -->
+          <div class="card sticky top-8">
+            <h3 class="text-lg font-semibold mb-4">Resources</h3>
+            
+            <div class="space-y-3">
+              {data.slidesFile && (
+                <a 
+                  href={`/speaking/slides/${data.slidesFile}`}
+                  target="_blank"
+                  class="flex items-center p-3 rounded-sm bg-primary-50 hover:bg-primary-100 transition-colors group"
+                >
+                  <svg class="w-8 h-8 text-red-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10.92,12.31C10.68,11.54 10.15,9.08 11.55,9.04C12.95,9 12.03,12.16 12.03,12.16C12.42,13.65 14.05,14.72 14.05,14.72C14.55,14.57 17.4,14.24 17,15.72C16.57,17.2 13.5,15.81 13.5,15.81C11.55,15.95 10.09,16.47 10.09,16.47C8.96,18.58 7.64,19.5 7.1,18.61C6.43,17.5 9.23,16.07 9.23,16.07C10.68,13.72 10.9,12.35 10.92,12.31Z"/>
+                  </svg>
+                  <div>
+                    <p class="font-medium text-primary-900 group-hover:text-accent-600 transition-colors">Download Slides</p>
+                    <p class="text-sm text-primary-500">Presentation Slides</p>
+                  </div>
+                </a>
+              )}
+              
+              {data.sessionUrl && (
+                <a 
+                  href={data.sessionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center p-3 rounded-sm bg-primary-50 hover:bg-primary-100 transition-colors group"
+                >
+                  <svg class="w-8 h-8 text-accent-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <div>
+                    <p class="font-medium text-primary-900 group-hover:text-accent-600 transition-colors">Session Details</p>
+                    <p class="text-sm text-primary-500">View on conference site</p>
+                  </div>
+                </a>
+              )}
+              
+              {data.videoUrl && (
+                <a 
+                  href={data.videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center p-3 rounded-sm bg-primary-50 hover:bg-primary-100 transition-colors group"
+                >
+                  <svg class="w-8 h-8 text-red-600 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z" />
+                  </svg>
+                  <div>
+                    <p class="font-medium text-primary-900 group-hover:text-accent-600 transition-colors">Watch Video</p>
+                    <p class="text-sm text-primary-500">View recording</p>
+                  </div>
+                </a>
+              )}
+            </div>
+            
+            {!data.slidesFile && !data.sessionUrl && !data.videoUrl && (
+              <p class="text-primary-500 text-sm">No resources available yet.</p>
+            )}
+          </div>
+          
+          <!-- Book Me Card -->
+          <div class="card bg-gradient-to-br from-accent-50 to-accent-100 border-accent-200">
+            <h3 class="text-lg font-semibold mb-2">Want Me to Speak?</h3>
+            <p class="text-primary-600 text-sm mb-4">
+              I'm available for keynotes, panels, and workshops on similar topics.
+            </p>
+            <a href="mailto:shane@shanemason.com" class="btn-accent w-full text-center">
+              Get in Touch
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

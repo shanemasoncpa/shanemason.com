@@ -1,0 +1,26 @@
+{
+  "title": "Strategies For Concentrated Stock Wealth",
+  "event": "MyStockOptions.com Webinar",
+  "date": "2025-09-18",
+  "location": "Virtual",
+  "type": "Lecture",
+  "lengthMinutes": 120,
+  "coPresenters": ["AJ Ayers", "Caitlin Fastiggi"],
+  "topics": ["Equity Compensation", "Taxation", "Behavioral Finance"],
+  "description": "This lively webinar features three seasoned financial planners explaining strategies and tips for reducing concentration risk and getting clients to take the necessary actions. Advising clients on billions of dollars of public and private company stock, these advisors guide employees, executives, and founders through every company growth stage and with all types of equity comp. This webinar goes beyond explaining the tax and financial-planning strategies to focus on helping clients take action. Learn practical ways to get your clients, with advisor guidance, to feel comfortable in making informed decisions to build their wealth and prevent mistakes.",
+  "learningObjectives": [
+    "Overview of concentrated stock strategies: 10b5-1 plans, gifting, CRTs, net vs. cash exercise, hedging",
+    "Tax-aware strategies, including RSU planning, option exercise approaches, AMT management, 83(b) elections",
+    "The execution gap: why clients don't act",
+    "Common behavior blockages: fear, FOMO, overconfidence, inertia, optimism bias",
+    "Behavioral frameworks for action and life-planning in equity decision conversations",
+    "Nudges, not just numbers, to encourage client action",
+    "Sample advisor scripts for reducing anxiety and guiding action",
+    "Client case studies illustrating key concepts"
+  ],
+  "sessionUrl": "https://www.bigmarker.com/mystockoptions/strategies-for-concentrated-stock-wealth-and-how-to-get-your-client-or-yourself-to-act",
+  "slidesFile": "mystockoptions-concentrated-stock-2025.pdf",
+  "upcoming": true,
+  "featured": true
+}
+

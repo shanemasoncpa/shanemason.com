@@ -1,0 +1,21 @@
+{
+  "title": "Executive Compensation Planning",
+  "event": "AICPA & CIMA Engage 2023",
+  "date": "2023-02-08",
+  "location": "Las Vegas, NV",
+  "type": "Lecture",
+  "lengthMinutes": 75,
+  "coPresenters": ["AJ Ayers"],
+  "topics": ["Taxation", "Equity Compensation"],
+  "description": "The profile of the modern executive is changing, and along with that, the way they are compensated. In the past, executives have typically been compensated with restricted stock and Non-Qualified Deferred Comp plans. But in today's landscape executives are often compensated with Incentive Stock Options and often limited opportunities for liquidity. This presentation will review the types of compensation available to executives and how to report it on the tax return. Topics will include Restricted Stock, NQSOs, ISOs, RSUs, 10b5-1 plans, Trading Plans, Deferred Compensation, third party liquidity options, restricted stock and 83(b) elections, and more.",
+  "learningObjectives": [
+    "Identify unique planning opportunities for clients with unique compensation challenges at private and public companies",
+    "Review the alphabet soup of equity compensation typically granted to executives",
+    "Explore how to report these complex transactions on your clients' tax returns"
+  ],
+  "sessionUrl": "https://aicpaconferences.com/live/1873/session/68259",
+  "slidesFile": "aicpa-2023-executive-compensation.pdf",
+  "upcoming": false,
+  "featured": true
+}
+

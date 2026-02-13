@@ -1,0 +1,15 @@
+{
+  "title": "Stock Options 101",
+  "event": "XYPN 2019",
+  "date": "2019-09-15",
+  "location": "St Louis, MO",
+  "type": "Lecture",
+  "lengthMinutes": 50,
+  "coPresenters": ["Rebecca Conner"],
+  "topics": ["Equity Compensation", "Taxation"],
+  "description": "An introductory session on stock options for financial planners, covering the basics of equity compensation and tax implications.",
+  "slidesFile": "xypn-2019-stock-options-101.pdf",
+  "upcoming": false,
+  "featured": false
+}
+

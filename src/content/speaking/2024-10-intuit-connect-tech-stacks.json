@@ -1,0 +1,14 @@
+{
+  "title": "Technology Stacks",
+  "event": "Intuit Connect 2024",
+  "date": "2024-10-29",
+  "location": "Las Vegas, NV",
+  "type": "Panel",
+  "lengthMinutes": 50,
+  "coPresenters": ["Ben Curtis", "Korey Courneyer", "Lisa Gilreath"],
+  "topics": ["Technology", "Practice Management"],
+  "description": "Panel discussion on building effective technology stacks for accounting and financial planning firms.",
+  "upcoming": false,
+  "featured": false
+}
+
