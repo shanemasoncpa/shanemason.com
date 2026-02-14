@@ -41,11 +41,6 @@ const hosts = [
     role: "Co-Host",
     bio: "Brooklyn Fi's 'Tax Girly' and everyone's favorite Auntie AJ. Brings vivid, energetic takes on tax implications and systemic inequality, always connecting the dots to client impact.",
   },
-  {
-    name: "John",
-    role: "Co-Host",
-    bio: "Technical planning expert who dives deep into complex scenarios. The go-to voice for walking through detailed financial planning strategies and edge cases.",
-  },
 ];
 ---
 
@@ -179,7 +174,7 @@ const hosts = [
       </div>
       
       <!-- Hosts -->
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="grid md:grid-cols-2 gap-8">
         {hosts.map((host, index) => (
           <div class={`card text-center animate-on-scroll stagger-${index + 1}`}>
             <div class="w-24 h-24 bg-gradient-to-br from-primary-200 to-primary-300 rounded-full mx-auto mb-4 flex items-center justify-center">
