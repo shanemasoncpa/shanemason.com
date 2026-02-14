@@ -5,15 +5,33 @@ import VideoEmbed from '../components/VideoEmbed.astro';
 import { getCollection } from 'astro:content';
 
 // Try to get speaking events, handle gracefully if empty
-let events: any[] = [];
+let speakingEvents: any[] = [];
+let upcomingCollection: any[] = [];
 try {
-  events = await getCollection('speaking');
+  speakingEvents = await getCollection('speaking');
 } catch (e) {
-  events = [];
+  speakingEvents = [];
+}
+try {
+  upcomingCollection = await getCollection('upcoming');
+} catch (e) {
+  upcomingCollection = [];
 }
 
-const upcomingEvents = events.filter(e => e.data.upcoming);
-const pastEvents = events.filter(e => !e.data.upcoming);
+// Combine upcoming from both collections
+const upcomingFromSpeaking = speakingEvents
+  .filter(e => e.data.upcoming)
+  .map(e => ({ ...e.data, source: 'speaking' }));
+
+const upcomingFromCollection = upcomingCollection
+  .map(e => ({ ...e.data, source: 'upcoming' }));
+
+const upcomingEvents = [...upcomingFromSpeaking, ...upcomingFromCollection]
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // chronological (soonest first)
+
+const pastEvents = speakingEvents
+  .filter(e => !e.data.upcoming)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()); // reverse chronological (most recent first)
 
 const topics = [
   {
@@ -81,7 +99,7 @@ const featuredVideos = [
             financial strategy, and the lessons learned from building businesses. My goal is 
             always the same: deliver practical value with energy and authenticity.
           </p>
-          <a href="mailto:speaking@example.com" class="btn-primary">
+          <a href="/book-speaking" class="btn-primary">
             Book Me to Speak
             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -185,12 +203,32 @@ const featuredVideos = [
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {upcomingEvents.map((event, index) => (
             <div class={`card border-accent-300 animate-on-scroll stagger-${index + 1}`}>
-              <p class="text-sm text-accent-600 font-medium mb-2">
-                {event.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-              </p>
-              <h3 class="text-xl font-semibold mb-1">{event.data.title}</h3>
-              <p class="text-primary-600 mb-2">{event.data.event}</p>
-              <p class="text-sm text-primary-500">{event.data.location}</p>
+              <div class="flex items-center gap-2 mb-2">
+                <p class="text-sm text-accent-600 font-medium">
+                  {new Date(event.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                </p>
+                {event.type === 'booth' && (
+                  <span class="px-2 py-0.5 text-xs font-medium bg-gemifi-light text-gemifi-primary rounded-full">
+                    {event.company === 'gemifi' ? 'Gemifi Booth' : 'Booth'}
+                  </span>
+                )}
+                {event.type === 'attending' && (
+                  <span class="px-2 py-0.5 text-xs font-medium bg-primary-100 text-primary-600 rounded-full">
+                    Attending
+                  </span>
+                )}
+              </div>
+              <h3 class="text-xl font-semibold mb-1">{event.title}</h3>
+              <p class="text-primary-600 mb-2">{event.event}</p>
+              <p class="text-sm text-primary-500">{event.location}</p>
+              {event.boothNumber && (
+                <p class="text-sm text-accent-600 mt-2">Booth #{event.boothNumber}</p>
+              )}
+              {event.url && (
+                <a href={event.url} target="_blank" rel="noopener" class="text-accent-600 text-sm hover:underline mt-2 inline-block">
+                  Event Details →
+                </a>
+              )}
             </div>
           ))}
         </div>
@@ -236,8 +274,8 @@ const featuredVideos = [
         panel discussion, or workshop, let's talk about how I can add value to your event.
       </p>
       <div class="flex flex-wrap justify-center gap-4">
-        <a href="mailto:speaking@example.com" class="btn-accent">
-          Get in Touch
+        <a href="/book-speaking" class="btn-accent">
+          Book Me to Speak
         </a>
         <a href="/media" class="btn-secondary border-primary-700 text-primary-50 hover:bg-primary-800">
           See Media Appearances

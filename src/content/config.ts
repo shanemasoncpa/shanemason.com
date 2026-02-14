@@ -102,6 +102,23 @@ const gallery = defineCollection({
   }),
 });
 
+// Upcoming events collection (conferences, booths, speaking engagements)
+const upcoming = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string(),
+    event: z.string(),
+    date: z.coerce.date(),
+    endDate: z.coerce.date().optional(),
+    location: z.string(),
+    type: z.enum(['speech', 'booth', 'panel', 'workshop', 'attending']),
+    description: z.string().optional(),
+    company: z.enum(['personal', 'gemifi', 'brooklynfi']).default('personal'),
+    url: z.string().optional(),
+    boothNumber: z.string().optional(),
+  }),
+});
+
 export const collections = {
   blog,
   speaking,
@@ -109,5 +126,6 @@ export const collections = {
   brooklynfi,
   gemifi,
   gallery,
+  upcoming,
 };
 
