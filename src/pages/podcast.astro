@@ -32,14 +32,19 @@ const featuredEpisodes = [
 
 const hosts = [
   {
-    name: "Shane",
-    role: "Co-Host",
-    bio: "Founder of Brooklyn Fi and creator of Gemifi. Passionate about helping entrepreneurs navigate their financial journeys.",
+    name: "Shane Mason",
+    role: "Host",
+    bio: "Founder of Brooklyn Fi. Informed but irreverent, opinionated but fair. Known for leading with provocative data points and making loose 'Speaking of...' connections.",
   },
   {
-    name: "Business Partner",
+    name: "AJ",
     role: "Co-Host",
-    bio: "Your business partner's bio goes here. Update this in the page source.",
+    bio: "Brooklyn Fi's 'Tax Girly' and everyone's favorite Auntie AJ. Brings vivid, energetic takes on tax implications and systemic inequality, always connecting the dots to client impact.",
+  },
+  {
+    name: "John",
+    role: "Co-Host",
+    bio: "Technical planning expert who dives deep into complex scenarios. The go-to voice for walking through detailed financial planning strategies and edge cases.",
   },
 ];
 ---
@@ -66,8 +71,8 @@ const hosts = [
           The Liquidity<br />Event
         </h1>
         <p class="text-xl md:text-2xl text-primary-200 mb-8 animate-fade-in-up stagger-1">
-          Conversations about entrepreneurship, exits, and everything in between. 
-          Real stories from founders who've been through it all.
+          Financial news for tech professionals with equity compensation.
+          RSUs, ISOs, IPOs, and everything in between — with a side of irreverent commentary.
         </p>
         
         <!-- Subscribe buttons -->
@@ -166,15 +171,15 @@ const hosts = [
       
       <div class="prose prose-lg max-w-none text-center mb-12">
         <p class="text-xl text-primary-600 leading-relaxed">
-          The Liquidity Event is a podcast from Brooklyn Fi that explores the 
-          entrepreneurial journey through the lens of financial planning and wealth building. 
-          Each week, we dive into real stories from founders who've built, scaled, and 
-          exited companies — sharing the lessons that don't make it into the headlines.
+          The Liquidity Event is a podcast from Brooklyn Fi for tech professionals navigating
+          equity compensation, IPOs, and liquidity events. Each week, we break down financial news
+          that matters — from RSU tax strategies to the latest on companies like SpaceX, OpenAI, and Stripe —
+          always connecting it back to what it means for your planning.
         </p>
       </div>
       
       <!-- Hosts -->
-      <div class="grid md:grid-cols-2 gap-8">
+      <div class="grid md:grid-cols-3 gap-8">
         {hosts.map((host, index) => (
           <div class={`card text-center animate-on-scroll stagger-${index + 1}`}>
             <div class="w-24 h-24 bg-gradient-to-br from-primary-200 to-primary-300 rounded-full mx-auto mb-4 flex items-center justify-center">
@@ -201,7 +206,7 @@ const hosts = [
       />
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-        {['Business Exits', 'Wealth Building', 'Tax Strategy', 'Founder Stories', 'M&A Insights', 'Life After Exit', 'Equity Planning', 'Market Trends'].map((topic, index) => (
+        {['Equity Compensation', 'IPOs & Liquidity Events', 'Tax Strategy', 'Tech Industry News', 'RSUs, ISOs & NSOs', 'AI & FinTech', 'Wealth & Inequality', 'Private Equity'].map((topic, index) => (
           <div class={`py-4 px-6 bg-white/5 rounded-sm animate-on-scroll stagger-${(index % 4) + 1}`}>
             <span class="text-primary-200">{topic}</span>
           </div>
