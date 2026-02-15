@@ -1,0 +1,268 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+
+const topics = [
+  'Building & Exiting a Business',
+  'Financial Planning for Founders',
+  'The Future of Fintech',
+  'Leadership & Team Building',
+  'Other (please describe in details)',
+];
+---
+
+<BaseLayout title="Book a Speaking Engagement | Shane" description="Invite Shane to speak at your conference, corporate event, or podcast.">
+  <section class="section-padding bg-gradient-to-b from-accent-50 to-white">
+    <div class="container-narrow">
+      <div class="text-center mb-12 animate-fade-in-up">
+        <p class="text-accent-600 font-medium mb-4">Speaking Inquiry</p>
+        <h1 class="mb-6">
+          Let's <span class="text-gradient">work together</span>
+        </h1>
+        <p class="text-xl text-primary-600 leading-relaxed max-w-2xl mx-auto">
+          Interested in having me speak at your event? Fill out the form below and I'll get back to you within 48 hours.
+        </p>
+      </div>
+
+      <div class="card-elevated animate-fade-in-up stagger-2">
+        <form id="booking-form" class="space-y-6">
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-primary-700 mb-2">
+              Your Name <span class="text-accent-600">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="form-input"
+              placeholder="Jane Smith"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-primary-700 mb-2">
+              Email Address <span class="text-accent-600">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="form-input"
+              placeholder="jane@company.com"
+            />
+          </div>
+
+          <!-- Topic -->
+          <div>
+            <label for="topic" class="block text-sm font-medium text-primary-700 mb-2">
+              Speaking Topic <span class="text-accent-600">*</span>
+            </label>
+            <select
+              id="topic"
+              name="topic"
+              required
+              class="form-input"
+            >
+              <option value="" disabled selected>Select a topic...</option>
+              {topics.map(topic => (
+                <option value={topic}>{topic}</option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Event Name -->
+          <div>
+            <label for="event" class="block text-sm font-medium text-primary-700 mb-2">
+              Conference / Event Name <span class="text-accent-600">*</span>
+            </label>
+            <input
+              type="text"
+              id="event"
+              name="event"
+              required
+              class="form-input"
+              placeholder="Annual Tech Summit 2026"
+            />
+          </div>
+
+          <!-- Event Date -->
+          <div>
+            <label for="event_date" class="block text-sm font-medium text-primary-700 mb-2">
+              Estimated Date of Talk <span class="text-accent-600">*</span>
+            </label>
+            <input
+              type="date"
+              id="event_date"
+              name="event_date"
+              required
+              class="form-input"
+            />
+          </div>
+
+          <!-- Budget -->
+          <div>
+            <label for="budget" class="block text-sm font-medium text-primary-700 mb-2">
+              Speaking Budget
+            </label>
+            <input
+              type="text"
+              id="budget"
+              name="budget"
+              class="form-input"
+              placeholder="e.g. $5,000 - $10,000"
+            />
+          </div>
+
+          <!-- Event Details -->
+          <div>
+            <label for="details" class="block text-sm font-medium text-primary-700 mb-2">
+              Event Details <span class="text-accent-600">*</span>
+            </label>
+            <textarea
+              id="details"
+              name="details"
+              required
+              rows="4"
+              class="form-input resize-none"
+              placeholder="Please include: location (city or virtual), expected audience size, format (keynote, panel, workshop), and any other relevant details..."
+            ></textarea>
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-4">
+            <button
+              type="submit"
+              class="btn-primary w-full justify-center text-lg"
+            >
+              Submit Inquiry
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- Success Message (hidden by default) -->
+        <div id="success-message" class="hidden text-center py-8">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold mb-2">Thank you!</h3>
+          <p class="text-primary-600">
+            Your inquiry has been submitted. I'll review it and get back to you within 48 hours.
+          </p>
+        </div>
+
+        <!-- Error Message (hidden by default) -->
+        <div id="error-message" class="hidden text-center py-4 mt-4 bg-red-50 border border-red-200 rounded-sm">
+          <p class="text-red-700">
+            Something went wrong. Please try again or email me directly at <a href="mailto:speaking@example.com" class="underline">speaking@example.com</a>
+          </p>
+        </div>
+      </div>
+
+      <p class="text-center text-primary-500 text-sm mt-8">
+        Prefer email? Reach out directly at <a href="mailto:speaking@example.com" class="text-accent-600 hover:underline">speaking@example.com</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .form-input {
+    @apply w-full px-4 py-3 bg-white border border-primary-200 rounded-sm text-primary-900 placeholder-primary-400 transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent;
+    @apply hover:border-primary-300;
+  }
+
+  select.form-input {
+    @apply appearance-none cursor-pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+</style>
+
+<script>
+  // IMPORTANT: Replace this URL with your Zapier webhook URL
+  // To get your webhook URL:
+  // 1. Go to zapier.com and create a new Zap
+  // 2. Choose "Webhooks by Zapier" as the trigger
+  // 3. Select "Catch Hook"
+  // 4. Copy the webhook URL and paste it below
+  const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/26426776/ue7yqv2/';
+
+  const form = document.getElementById('booking-form') as HTMLFormElement;
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Hide any previous messages
+    errorMessage?.classList.add('hidden');
+
+    // Get form data
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      topic: formData.get('topic'),
+      event: formData.get('event'),
+      event_date: formData.get('event_date'),
+      budget: formData.get('budget'),
+      details: formData.get('details'),
+      submitted_at: new Date().toISOString(),
+    };
+
+    // Disable submit button
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <svg class="animate-spin w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Submitting...
+    `;
+
+    try {
+      // Send as form-urlencoded to avoid CORS preflight issues
+      const formBody = new URLSearchParams();
+      formBody.append('name', data.name as string);
+      formBody.append('email', data.email as string);
+      formBody.append('topic', data.topic as string);
+      formBody.append('event', data.event as string);
+      formBody.append('event_date', data.event_date as string);
+      formBody.append('budget', data.budget as string || '');
+      formBody.append('details', data.details as string);
+      formBody.append('submitted_at', data.submitted_at);
+
+      const response = await fetch(ZAPIER_WEBHOOK_URL, {
+        method: 'POST',
+        body: formBody,
+      });
+
+      if (response.ok) {
+        form.classList.add('hidden');
+        successMessage?.classList.remove('hidden');
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      errorMessage?.classList.remove('hidden');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  });
+</script>

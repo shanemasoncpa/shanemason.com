@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found | Shane" description="Oops! This page doesn't exist.">
+  <section class="section-padding min-h-[70vh] flex items-center justify-center">
+    <div class="container-narrow text-center">
+      <div class="animate-fade-in-up">
+        <!-- Fun 404 illustration -->
+        <div class="text-9xl font-serif font-bold text-primary-200 mb-4 select-none">
+          4<span class="inline-block animate-bounce">0</span>4
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-serif mb-4">
+          Well, this is awkward.
+        </h1>
+
+        <p class="text-xl text-primary-600 mb-8 max-w-md mx-auto">
+          Looks like this page took an early exit.
+          <span class="text-primary-400">(Speaking of liquidity events...)</span>
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/" class="btn-primary">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            Back Home
+          </a>
+          <a href="/speaking" class="btn-secondary">
+            View Speaking
+          </a>
+        </div>
+
+        <p class="text-primary-400 text-sm mt-12">
+          If you think this is a mistake, let me know at
+          <a href="mailto:shane@brooklynfi.com" class="text-accent-600 hover:underline">shane@brooklynfi.com</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-bounce {
+    animation: bounce 2s ease-in-out infinite;
+  }
+</style>
