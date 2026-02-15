@@ -69,16 +69,23 @@ const testimonials = [
   },
 ];
 
-const featuredVideos = [
+// Add YouTube video URLs here when available
+const featuredVideos: { url: string; title: string; description: string }[] = [
+  // {
+  //   url: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
+  //   title: "Your Video Title",
+  //   description: "Event Name",
+  // },
+];
+
+const speakingPhotos = [
   {
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    title: "Keynote: The Entrepreneur's Exit Playbook",
-    description: "Annual Founders Conference 2023",
+    src: "/images/speaking/speaking-podium.jpg",
+    alt: "Shane Mason presenting at a conference",
   },
   {
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    title: "Panel: The Future of Financial Advice",
-    description: "Fintech Forward Summit",
+    src: "/images/speaking/panelists-group.png",
+    alt: "Shane with fellow panelists",
   },
 ];
 ---
@@ -108,13 +115,11 @@ const featuredVideos = [
         </div>
         
         <div class="relative animate-fade-in stagger-2">
-          <!-- Placeholder for speaking photo -->
-          <div class="aspect-video bg-gradient-to-br from-primary-200 to-primary-300 rounded-sm flex items-center justify-center">
-            <p class="text-primary-500 text-center p-8">
-              [Speaking Photo]<br />
-              <span class="text-sm">Add to /public/images/speaking-hero.jpg</span>
-            </p>
-          </div>
+          <img
+            src="/images/speaking/qb-connect-main-stage.jpg"
+            alt="Shane Mason on the main stage at QB Connect"
+            class="rounded-sm shadow-lg w-full"
+          />
         </div>
       </div>
     </div>
@@ -141,30 +146,57 @@ const featuredVideos = [
     </div>
   </section>
   
-  <!-- Featured Videos -->
+  <!-- Featured Videos (only shows when videos are available) -->
+  {featuredVideos.length > 0 && (
+    <section class="section-padding bg-primary-100">
+      <div class="container-wide">
+        <SectionHeader
+          title="Watch Me Speak"
+          subtitle="Sample recordings from recent events."
+          align="center"
+        />
+
+        <div class="grid md:grid-cols-2 gap-8">
+          {featuredVideos.map((video, index) => (
+            <div class={`animate-on-scroll stagger-${index + 1}`}>
+              <VideoEmbed
+                url={video.url}
+                title={video.title}
+                description={video.description}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Speaking Photos -->
   <section class="section-padding bg-primary-100">
     <div class="container-wide">
-      <SectionHeader 
-        title="Watch Me Speak" 
-        subtitle="Sample recordings from recent events. Upload your speaking videos to YouTube and they'll appear here."
+      <SectionHeader
+        title="On Stage"
         align="center"
       />
-      
-      <div class="grid md:grid-cols-2 gap-8">
-        {featuredVideos.map((video, index) => (
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 animate-on-scroll">
+          <img
+            src="/images/speaking/qb-connect-main-stage.jpg"
+            alt="Shane Mason on the main stage at QB Connect"
+            class="w-full h-80 object-cover rounded-sm shadow-lg"
+          />
+        </div>
+        {speakingPhotos.map((photo, index) => (
           <div class={`animate-on-scroll stagger-${index + 1}`}>
-            <VideoEmbed 
-              url={video.url}
-              title={video.title}
-              description={video.description}
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              class="w-full h-80 object-cover rounded-sm shadow-lg"
             />
           </div>
         ))}
       </div>
-      
-      <p class="text-center text-primary-500 mt-8 text-sm">
-        Replace placeholder URLs in the page source with your actual YouTube video links
-      </p>
     </div>
   </section>
   
