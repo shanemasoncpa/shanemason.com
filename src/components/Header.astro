@@ -7,16 +7,8 @@ const { brandTheme = 'default' } = Astro.props;
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/blog', label: 'Blog' },
   { href: '/speaking', label: 'Speaking' },
-  { href: '/media', label: 'Media' },
   { href: '/podcast', label: 'Podcast' },
-];
-
-const companyLinks = [
-  { href: '/brooklyn-fi', label: 'Brooklyn Fi' },
-  { href: '/gemifi', label: 'Gemifi' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -71,22 +63,6 @@ const colors = getBrandColors();
           </a>
         ))}
         
-        <span class="w-px h-4 bg-current opacity-30"></span>
-        
-        {companyLinks.map(link => (
-          <a 
-            href={link.href} 
-            class={`text-sm font-medium transition-colors ${colors.hover} ${
-              currentPath === link.href ? colors.accent : ''
-            }`}
-          >
-            {link.label}
-          </a>
-        ))}
-        
-        <a href="/personal" class={`text-sm font-medium transition-colors ${colors.hover}`}>
-          Life
-        </a>
       </div>
       
       <!-- Mobile Menu Button -->
@@ -117,22 +93,6 @@ const colors = getBrandColors();
           </a>
         ))}
         
-        <div class="border-t border-current/20 my-2 pt-2">
-          {companyLinks.map(link => (
-            <a 
-              href={link.href} 
-              class={`block py-2 text-sm font-medium transition-colors ${colors.hover} ${
-                currentPath === link.href ? colors.accent : ''
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
-          
-          <a href="/personal" class={`block py-2 text-sm font-medium transition-colors ${colors.hover}`}>
-            Life
-          </a>
-        </div>
       </div>
     </div>
   </nav>
@@ -152,4 +112,3 @@ const colors = getBrandColors();
     menuClose?.classList.toggle('hidden');
   });
 </script>
-

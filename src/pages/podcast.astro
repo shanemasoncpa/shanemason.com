@@ -5,29 +5,6 @@ import VideoEmbed from '../components/VideoEmbed.astro';
 
 const podcastLinks = [
   { platform: 'YouTube', url: 'https://www.youtube.com/playlist?list=PLdexBS_EY0yyfO36PsIH1j9sKacKCcgwi', icon: 'youtube' },
-  { platform: 'Apple Podcasts', url: '#', icon: 'apple' },
-  { platform: 'Spotify', url: '#', icon: 'spotify' },
-];
-
-const featuredEpisodes = [
-  {
-    title: "What No One Tells You About Selling Your Business",
-    description: "We dive deep into the emotional and financial realities of exiting a company.",
-    url: "https://www.youtube.com/watch?v=example1",
-    episodeNumber: 100,
-  },
-  {
-    title: "Tax Strategies Every Founder Should Know",
-    description: "Breaking down the tax implications of equity compensation, exits, and wealth building.",
-    url: "https://www.youtube.com/watch?v=example2",
-    episodeNumber: 95,
-  },
-  {
-    title: "From Employee to Entrepreneur",
-    description: "Stories and advice for those making the leap from corporate to founder.",
-    url: "https://www.youtube.com/watch?v=example3",
-    episodeNumber: 90,
-  },
 ];
 
 const hosts = [
@@ -120,42 +97,7 @@ const hosts = [
       </div>
     </div>
   </section>
-  
-  <!-- Featured Episodes -->
-  <section class="section-padding bg-primary-50">
-    <div class="container-wide">
-      <SectionHeader 
-        title="Popular Episodes" 
-        subtitle="Start here if you're new to the show."
-        align="center"
-      />
-      
-      <div class="grid md:grid-cols-3 gap-6">
-        {featuredEpisodes.map((episode, index) => (
-          <a 
-            href={episode.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class={`card group animate-on-scroll stagger-${index + 1}`}
-          >
-            <div class="aspect-video bg-gradient-to-br from-primary-900 to-accent-900 rounded-sm mb-4 flex items-center justify-center relative overflow-hidden">
-              <span class="absolute top-2 left-2 px-2 py-1 bg-white/20 text-white text-xs rounded">
-                EP {episode.episodeNumber}
-              </span>
-              <svg class="w-12 h-12 text-white/80 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-            <h3 class="font-semibold text-lg group-hover:text-accent-600 transition-colors mb-2">
-              {episode.title}
-            </h3>
-            <p class="text-primary-600 text-sm">{episode.description}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-  
+
   <!-- About the Show -->
   <section class="section-padding">
     <div class="container-narrow">
@@ -224,4 +166,3 @@ const hosts = [
     </div>
   </section>
 </BaseLayout>
-
